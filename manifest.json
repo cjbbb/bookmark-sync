@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "智能书签同步",
+  "short_name": "BookmarkSync",
+  "description": "支持 GitLab/GitHub 同步和 AI 智能分类的书签管理工具",
+  "version": "1.0.0",
+  "permissions": [
+    "bookmarks",
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://gitlab.com/*",
+    "https://api.github.com/*",
+    "https://api.minimax.chat/*",
+    "https://api.deepseek.com/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
