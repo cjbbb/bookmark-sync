@@ -33,7 +33,8 @@
       </header>
 
 
-    <main class="opt-main">
+    <main class="opt-main dashboard-grid">
+      <div class="opt-left">
       <!-- Sync Configuration -->
       <section class="opt-section">
         <h2 class="section-title">
@@ -132,7 +133,7 @@
           </div>
           <div id="sync-test-result" class="opt-result hidden"></div>
         </div>
-      </section>
+        </section>
 
       <!-- AI Configuration -->
       <section class="opt-section">
@@ -218,7 +219,15 @@
           </div>
           <div id="ai-test-result" class="opt-result hidden"></div>
         </div>
+      </section>
+      </div>
 
+      <div class="opt-right">
+      <section class="opt-section" style="height: 100%; display: flex; flex-direction: column;">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          AI 自动分类控制台
+        </h2>
         <!-- 🚀 独立的 AI 自动分类操作面板 🚀 -->
         <div class="ai-actions-panel">
           <div class="ai-intro">
@@ -242,8 +251,9 @@
             <div class="ai-header-controls">
               <h3 style="font-size: 14px; font-weight: 700;">AI 分类建议</h3>
               <div class="ai-control-btns">
-                <button id="btn-accept-all">全部接受</button>
-                <button id="btn-reject-all">全部拒绝</button>
+                <button id="btn-accept-all">全部选定</button>
+                <button id="btn-reject-all">取消全选</button>
+                <button id="btn-cancel-ai" style="color: var(--accent-red); border-color: rgba(239, 68, 68, 0.4);">放弃返回</button>
               </div>
             </div>
             <div id="suggestions-list" class="ai-suggestions-list"></div>
@@ -256,7 +266,6 @@
 
         </section>
       </div>
-
     </main>
 
 

@@ -248,6 +248,8 @@ $('#btn-ai-classify').addEventListener('click', async () => {
   const progressText = $('#ai-progress-text');
   
   btn.disabled = true;
+  $('.opt-left').classList.add('hidden');
+  $('.dashboard-grid').classList.add('ai-focus');
   progressBox.classList.remove('hidden');
   $('#ai-suggestions').classList.add('hidden');
   progressBar.style.width = '0%';
@@ -263,8 +265,8 @@ $('#btn-ai-classify').addEventListener('click', async () => {
     }
 
     aiSuggestions = [];
-    const BATCH_SIZE = 30; // 扩大单批次容量
-    const CONCURRENCY = 4; // 并发请求数 (4路齐发)
+    const BATCH_SIZE = 50; // Increased to be faster and less granular precision needed
+    const CONCURRENCY = 6; // Increased concurrency 
     const provider = await AIEngine.getProvider();
 
     const batches = [];
@@ -321,39 +323,32 @@ function renderSuggestions() {
 
   aiSuggestions.forEach((s, i) => {
     const card = document.createElement('div');
-    card.className = `suggestion-card ${s.status === 'accepted' ? 'selected' : ''} ${s.status === 'rejected' ? 'rejected' : ''}`;
+    card.className = `suggestion-list-item ${s.status === 'accepted' ? 'accepted' : ''}`;
     card.innerHTML = `
-      <div class="sug-header">
+      <div class="sug-checkbox-wrap">
+        <input type="checkbox" class="sug-check" data-index="${i}" ${s.status === 'accepted' ? 'checked' : ''}>
+      </div>
+      <div class="sug-content">
         <div class="sug-title" title="${escapeHtml(s.title)}">${escapeHtml(s.title)}</div>
-      </div>
-      <div class="sug-change">
-        <span class="sug-old">${escapeHtml(s.currentCategory || '暂无')}</span>
-        <span>→</span>
-        <span class="sug-new">${escapeHtml(s.suggestedCategory)}</span>
-      </div>
-      ${s.reason ? `<div class="sug-reason">${escapeHtml(s.reason)}</div>` : ''}
-      <div class="sug-op">
-        <button class="sug-mini-btn accept" data-index="${i}">接受</button>
-        <button class="sug-mini-btn reject" data-index="${i}">拒绝</button>
+        <div class="sug-path">
+          <span>${escapeHtml(s.currentCategory || '暂无分类')}</span>
+          <span style="opacity:0.5; margin:0 8px;">→</span>
+          <span class="sug-new-path">${escapeHtml(s.suggestedCategory)}</span>
+          ${s.reason ? `<span class="sug-reason-badge" title="${escapeHtml(s.reason)}">有建议理由</span>` : ''}
+        </div>
       </div>
     `;
     list.appendChild(card);
   });
 
   // Bind Buttons
-  list.querySelectorAll('.sug-mini-btn.accept').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const idx = btn.dataset.index;
-      aiSuggestions[idx].status = aiSuggestions[idx].status === 'accepted' ? 'pending' : 'accepted';
-      renderSuggestions();
-    });
-  });
-
-  list.querySelectorAll('.sug-mini-btn.reject').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const idx = btn.dataset.index;
-      aiSuggestions[idx].status = aiSuggestions[idx].status === 'rejected' ? 'pending' : 'rejected';
-      renderSuggestions();
+  list.querySelectorAll('.sug-check').forEach(chk => {
+    chk.addEventListener('change', (e) => {
+      const idx = e.target.dataset.index;
+      aiSuggestions[idx].status = e.target.checked ? 'accepted' : 'pending';
+      const item = e.target.closest('.suggestion-list-item');
+      if(e.target.checked) item.classList.add('accepted');
+      else item.classList.remove('accepted');
     });
   });
 }
@@ -364,8 +359,16 @@ $('#btn-accept-all').addEventListener('click', () => {
 });
 
 $('#btn-reject-all').addEventListener('click', () => {
-  aiSuggestions.forEach(s => s.status = 'rejected');
+  aiSuggestions.forEach(s => s.status = 'pending');
   renderSuggestions();
+});
+
+$('#btn-cancel-ai').addEventListener('click', () => {
+  $('.opt-left').classList.remove('hidden');
+  $('.dashboard-grid').classList.remove('ai-focus');
+  $('#ai-suggestions').classList.add('hidden');
+  aiSuggestions = [];
+  showToast('已放弃分类');
 });
 
 $('#btn-apply-selected').addEventListener('click', async () => {
@@ -392,6 +395,8 @@ $('#btn-apply-selected').addEventListener('click', async () => {
   btn.disabled = false;
   btn.textContent = '应用已选建议';
   $('#ai-suggestions').classList.add('hidden');
+  $('.opt-left').classList.remove('hidden');
+  $('.dashboard-grid').classList.remove('ai-focus');
   aiSuggestions = [];
 });
 

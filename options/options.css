@@ -97,22 +97,31 @@ body {
 .opt-header h1 {
   font-size: 18px; font-weight: 700;
   background: linear-gradient(135deg, #c4b5fd, #818cf8);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 body.light-mode .opt-header h1 {
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
   -webkit-background-clip: text;
+  background-clip: text;
 }
 .opt-subtitle { font-size: 12px; color: var(--text-muted); }
 
 /* ── Dashboard Grid ── */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 24px;
-  max-width: 1400px; width: 100%;
-  margin: 0 auto; padding: 24px;
+  grid-template-columns: minmax(380px, 450px) minmax(380px, 600px);
+  justify-content: center;
+  gap: 32px;
+  max-width: 1200px; width: 100%;
+  margin: 0 auto; padding: 32px 24px;
   flex: 1; align-items: stretch;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-grid.ai-focus {
+  grid-template-columns: minmax(600px, 900px); /* 放大右侧 */
 }
 
 .opt-left {
@@ -132,14 +141,34 @@ body.light-mode .opt-header h1 {
   margin-top: 20px; border: none; padding-top: 0;
 }
 
+#ai-suggestions {
+  display: flex; flex-direction: column;
+  width: 100%; min-width: 0; flex: 1;
+}
+
+/* Limit button and intro block width so it doesn't look gigantic */
+.ai-actions-panel .ai-intro,
+.ai-actions-panel #btn-ai-classify {
+  max-width: 400px;
+  width: 100%;
+}
+.ai-actions-panel #btn-apply-selected {
+  width: 100%;
+}
+
 .opt-right .ai-suggestions-list {
   flex: 1; overflow-y: auto;
-  max-height: calc(100vh - 280px); /* 动态扣除高度 */
+  min-height: 300px;
+  height: calc(100vh - 280px);
   margin-top: 16px; padding-right: 6px;
+  width: 100%; /* Suggestions use more space */
 }
 
 @media (max-width: 1024px) {
-  .dashboard-grid { grid-template-columns: 1fr; }
+  .dashboard-grid { 
+    grid-template-columns: 1fr; 
+    max-width: 600px;
+  }
   .opt-right .ai-suggestions-list { max-height: none; }
 }
 
@@ -176,26 +205,56 @@ body.light-mode .opt-header h1 {
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
 /* ── Radio Cards ── */
-.radio-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.radio-card { cursor: pointer; }
-.radio-card input { display: none; }
-.radio-content {
-  padding: 12px; background: var(--bg-input);
-  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
-  text-align: center; font-weight: 600; font-size: 13px;
-  transition: all var(--transition-fast);
+.radio-group {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
 }
-.radio-card input:checked + .radio-content {
-  border-color: var(--accent-primary); background: rgba(124, 92, 252, 0.08);
-  font-weight: 700;
+.radio-card {
+  position: relative;
+  background: var(--bg-input);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px; cursor: pointer;
+  transition: all var(--transition-normal);
 }
-body.light-mode .radio-card input:checked + .radio-content {
-  background: rgba(99, 102, 241, 0.08);
+.radio-card:hover {
+  border-color: var(--border-active);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.radio-card input { position: absolute; opacity: 0; pointer-events: none; }
+
+/* The :has selector is modern and works in Chrome 105+, perfectly fine for an extension */
+.radio-card:has(input:checked) {
+  border-color: var(--accent-primary);
+  background: var(--bg-hover);
 }
 
+.radio-card-inner {
+  display: flex; align-items: center; gap: 12px;
+}
+.radio-icon {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 14px; font-weight: 700;
+  transition: all var(--transition-normal);
+}
+.radio-card:has(input:checked) .radio-icon {
+  background: var(--accent-primary); color: white;
+}
+.radio-card-inner > div:last-child {
+  display: flex; flex-direction: column; gap: 4px;
+  align-items: flex-start;
+  text-align: left;
+}
+.radio-card-inner strong { font-size: 14px; }
+.radio-hint { font-size: 11px; color: var(--text-muted); }
+
 .form-actions { display: flex; gap: 10px; margin-top: 12px; }
+.form-actions .opt-btn { flex: 1; }
 .opt-btn {
-  flex: 1; padding: 10px; border-radius: var(--radius-md);
+  padding: 10px; border-radius: var(--radius-md);
   border: none; font-size: 13px; font-weight: 600; cursor: pointer;
   transition: all var(--transition-fast); display: flex; align-items: center; justify-content: center; gap: 6px;
 }
@@ -221,27 +280,41 @@ body.light-mode .radio-card input:checked + .radio-content {
 }
 
 .ai-suggestions-list {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+  width: 100%; min-width: 0;
 }
-.suggestion-card {
+.suggestion-list-item {
+  display: flex; align-items: center; gap: 12px;
   background: var(--bg-input); border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md); padding: 14px;
-  display: flex; flex-direction: column; justify-content: space-between;
+  border-radius: var(--radius-md); padding: 12px 16px;
+  transition: all var(--transition-fast);
+  max-width: 100%; overflow: hidden;
 }
-.suggestion-card.selected { border-color: var(--accent-green); background: rgba(34, 197, 94, 0.03); }
-
-.sug-title { font-weight: 700; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sug-change { font-size: 12px; margin: 6px 0; color: var(--text-secondary); }
-.sug-old { text-decoration: line-through; color: var(--text-muted); }
-.sug-new { color: var(--accent-green); font-weight: 700; margin-left: 4px; }
-.sug-reason { font-size: 11.5px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 12px; }
-
-.sug-op { display: flex; gap: 8px; }
-.sug-mini-btn {
-  flex: 1; padding: 6px; font-size: 11.5px; border-radius: 6px;
-  border: 1px solid var(--border-subtle); background: var(--bg-secondary); cursor: pointer;
+.suggestion-list-item:hover { border-color: var(--border-active); }
+.suggestion-list-item.accepted {
+  background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.3);
 }
-.sug-mini-btn:hover { border-color: var(--accent-primary); }
+
+.sug-checkbox-wrap input[type="checkbox"] {
+  width: 18px; height: 18px; cursor: pointer;
+  accent-color: var(--accent-green);
+}
+
+.sug-content { flex: 1; min-width: 0; }
+.sug-title { font-weight: 600; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 4px;}
+.sug-path { font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; }
+.sug-new-path { color: var(--accent-green); font-weight: 600; }
+.sug-reason-badge { 
+  font-size: 11px; padding: 2px 6px; border-radius: 4px; 
+  background: var(--bg-secondary); color: var(--text-muted); margin-left: 8px;
+}
+.ai-header-controls { display: flex; justify-content: space-between; align-items: center; }
+.ai-control-btns { display: flex; gap: 8px; }
+.ai-control-btns button {
+  padding: 6px 12px; font-size: 12px; border-radius: 6px;
+  border: 1px solid var(--border-subtle); background: var(--bg-input); color: var(--text-primary); cursor: pointer;
+}
+.ai-control-btns button:hover { border-color: var(--accent-primary); }
 
 /* ── Common Theme Toggle Icon ── */
 .theme-toggle { cursor: pointer; }
@@ -253,8 +326,18 @@ body.light-mode .radio-card input:checked + .radio-content {
 .hidden { display: none !important; }
 
 #toast {
-  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-  background: var(--bg-secondary); border: 1px solid var(--border-subtle);
-  padding: 10px 20px; border-radius: 20px; font-size: 13px; z-index: 999;
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--bg-card); border: 1px solid var(--border-active);
+  padding: 12px 24px; border-radius: 30px; font-size: 14px; z-index: 999;
+  opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-card); font-weight: 500;
 }
+
+#toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+#toast.error { border-color: var(--accent-red); color: var(--accent-red); }
+#toast.success { border-color: var(--accent-green); color: var(--accent-green); }
 
