@@ -60,7 +60,11 @@ async function handleMessage(message) {
     case 'testSync':
       return SyncEngine.testConnection();
 
+    case 'createSyncRepo':
+      return SyncEngine.createRepository();
+
     case 'getSyncConfig':
+
       return SyncEngine.getConfig();
 
     case 'saveSyncConfig':

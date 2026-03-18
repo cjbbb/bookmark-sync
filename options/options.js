@@ -93,8 +93,25 @@ $('#btn-test-sync').addEventListener('click', async () => {
   if (result.success) {
     showResult('sync-test-result', `✅ ${result.message}`, 'success');
   } else {
+    if (result.code === 404) {
+      if (confirm(`检测到该仓库不存在 (404)。是否授权插件使用您的 Token 自动创建一个 Private（私有）仓并初始化？`)) {
+        const createRes = await sendMessage('createSyncRepo');
+        if (createRes.success) {
+          showToast('仓库创建成功！重新测试连接中...');
+          btn.disabled = false;
+          $('#btn-test-sync').click();
+          return;
+        } else {
+          showResult('sync-test-result', `❌ 自动创建仓库失败: ${createRes.message}`, 'error');
+          btn.disabled = false;
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>测试连接`;
+          return;
+        }
+      }
+    }
     showResult('sync-test-result', `❌ ${result.message}`, 'error');
   }
+
 
   btn.disabled = false;
   btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>测试连接`;
