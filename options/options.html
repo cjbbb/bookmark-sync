@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,261 +10,399 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="options.css">
 </head>
+
 <body>
   <div class="options-app">
     <!-- Header -->
     <header class="opt-header">
-        <div class="opt-header-inner">
-          <div class="opt-logo">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-            </svg>
-          </div>
-          <div>
-            <h1>智能书签同步</h1>
-            <p class="opt-subtitle">配置同步与 AI 分类</p>
-          </div>
-          <!-- 主题切换开关 -->
-          <div class="theme-toggle" style="margin-left: auto;">
-            <label class="switch-card" id="btn-theme-toggle" title="切换明暗主题">
-              <span class="theme-icon">🌙</span>
-            </label>
-          </div>
+      <div class="opt-header-inner">
+        <div class="opt-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg>
         </div>
-      </header>
+        <div>
+          <h1>智能书签同步</h1>
+          <p class="opt-subtitle">配置同步与 AI 分类</p>
+        </div>
+        <!-- 主题切换开关 -->
+        <div class="theme-toggle" style="margin-left: auto;">
+          <label class="switch-card" id="btn-theme-toggle" title="切换明暗主题">
+            <span class="theme-icon">🌙</span>
+          </label>
+        </div>
+      </div>
+    </header>
 
 
     <main class="opt-main dashboard-grid">
       <div class="opt-left">
-      <!-- Sync Configuration -->
-      <section class="opt-section">
-        <h2 class="section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          同步配置
-        </h2>
+        <!-- Sync Configuration -->
+        <section class="opt-section" data-collapsible="true">
+          <h2 class="section-title section-toggle" role="button" tabindex="0" aria-expanded="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" />
+              <polyline points="1 20 1 14 7 14" />
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+            同步配置
+            <span class="section-chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </h2>
 
-        <div class="form-group">
-          <label class="form-label">平台选择</label>
-          <div class="radio-group">
-            <label class="radio-card" id="radio-gitlab">
-              <input type="radio" name="platform" value="gitlab">
-              <div class="radio-card-inner">
-                <div class="radio-icon gitlab-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/></svg>
+          <div class="form-group">
+            <label class="form-label">平台选择</label>
+            <div class="radio-group">
+              <label class="radio-card" id="radio-gitlab">
+                <input type="radio" name="platform" value="gitlab">
+                <div class="radio-card-inner">
+                  <div class="radio-icon gitlab-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>GitLab</strong>
+                    <span class="radio-hint">中国大陆可直接访问</span>
+                  </div>
                 </div>
-                <div>
-                  <strong>GitLab</strong>
-                  <span class="radio-hint">中国大陆可直接访问</span>
+              </label>
+              <label class="radio-card" id="radio-github">
+                <input type="radio" name="platform" value="github">
+                <div class="radio-card-inner">
+                  <div class="radio-icon github-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>GitHub</strong>
+                    <span class="radio-hint">需可访问 github.com</span>
+                  </div>
                 </div>
-              </div>
-            </label>
-            <label class="radio-card" id="radio-github">
-              <input type="radio" name="platform" value="github">
-              <div class="radio-card-inner">
-                <div class="radio-icon github-icon">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                </div>
-                <div>
-                  <strong>GitHub</strong>
-                  <span class="radio-hint">需可访问 github.com</span>
-                </div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <!-- GitLab Fields -->
-        <div id="gitlab-fields" class="platform-fields hidden">
-          <div class="form-group">
-            <label class="form-label" for="gitlab-url">GitLab 地址</label>
-            <input type="url" id="gitlab-url" class="form-input" placeholder="https://gitlab.com" value="https://gitlab.com">
-            <p class="form-hint">如使用自建 GitLab，请输入完整地址</p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="gitlab-token">Personal Access Token</label>
-            <input type="password" id="gitlab-token" class="form-input" placeholder="glpat-xxxxxxxxxxxx">
-            <p class="form-hint">需要 <code>api</code> 权限。<a href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank" rel="noopener">生成 Token →</a></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="gitlab-project">项目 ID 或路径</label>
-            <input type="text" id="gitlab-project" class="form-input" placeholder="12345 或 username/bookmarks">
-            <p class="form-hint">可在项目主页找到数字 ID，或使用 URL 路径如 <code>username/bookmarks</code></p>
-          </div>
-        </div>
-
-        <!-- GitHub Fields -->
-        <div id="github-fields" class="platform-fields hidden">
-          <div class="form-group">
-            <label class="form-label" for="github-token">Personal Access Token</label>
-            <input type="password" id="github-token" class="form-input" placeholder="ghp_xxxxxxxxxxxx">
-            <p class="form-hint">需要 <code>repo</code> 权限。<a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">生成 Token →</a></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="github-owner">仓库所有者</label>
-            <input type="text" id="github-owner" class="form-input" placeholder="your-username">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="github-repo">仓库名</label>
-            <input type="text" id="github-repo" class="form-input" placeholder="bookmarks">
-          </div>
-        </div>
-
-        <!-- Common Fields -->
-        <div id="common-fields" class="platform-fields hidden">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="sync-branch">分支</label>
-              <input type="text" id="sync-branch" class="form-input" value="main" placeholder="main">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="sync-filepath">文件路径</label>
-              <input type="text" id="sync-filepath" class="form-input" value="bookmarks.json" placeholder="bookmarks.json">
+              </label>
             </div>
           </div>
 
-          <div class="form-actions">
-            <button id="btn-test-sync" class="opt-btn secondary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              测试连接
-            </button>
-            <button id="btn-save-sync" class="opt-btn primary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-              保存配置
-            </button>
+          <!-- GitLab Fields -->
+          <div id="gitlab-fields" class="platform-fields hidden">
+            <div class="form-group">
+              <label class="form-label" for="gitlab-url">GitLab 地址</label>
+              <input type="url" id="gitlab-url" class="form-input" placeholder="https://gitlab.com"
+                value="https://gitlab.com">
+              <p class="form-hint">如使用自建 GitLab，请输入完整地址</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="gitlab-token">Personal Access Token</label>
+              <input type="password" id="gitlab-token" class="form-input" placeholder="glpat-xxxxxxxxxxxx">
+              <p class="form-hint">需要 <code>api</code> 权限。<a
+                  href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank" rel="noopener">生成
+                  Token →</a></p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="gitlab-project">项目 ID 或路径</label>
+              <input type="text" id="gitlab-project" class="form-input" placeholder="12345 或 username/bookmarks">
+              <p class="form-hint">可在项目主页找到数字 ID，或使用 URL 路径如 <code>username/bookmarks</code></p>
+            </div>
           </div>
-          <div id="sync-test-result" class="opt-result hidden"></div>
-        </div>
+
+          <!-- GitHub Fields -->
+          <div id="github-fields" class="platform-fields hidden">
+            <div class="form-group">
+              <label class="form-label" for="github-token">Personal Access Token</label>
+              <input type="password" id="github-token" class="form-input" placeholder="ghp_xxxxxxxxxxxx">
+              <p class="form-hint">需要 <code>repo</code> 权限。<a href="https://github.com/settings/tokens/new"
+                  target="_blank" rel="noopener">生成 Token →</a></p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="github-owner">仓库所有者</label>
+              <input type="text" id="github-owner" class="form-input" placeholder="your-username">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="github-repo">仓库名</label>
+              <input type="text" id="github-repo" class="form-input" placeholder="bookmarks">
+            </div>
+          </div>
+
+          <!-- Common Fields -->
+          <div id="common-fields" class="platform-fields hidden">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="sync-branch">分支</label>
+                <input type="text" id="sync-branch" class="form-input" value="main" placeholder="main">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sync-filepath">文件路径</label>
+                <input type="text" id="sync-filepath" class="form-input" value="bookmarks.json"
+                  placeholder="bookmarks.json">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button id="btn-test-sync" class="opt-btn secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                测试连接
+              </button>
+              <button id="btn-save-sync" class="opt-btn primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                  <polyline points="17 21 17 13 7 13 7 21" />
+                  <polyline points="7 3 7 8 15 8" />
+                </svg>
+                保存配置
+              </button>
+            </div>
+            <div id="sync-test-result" class="opt-result hidden"></div>
+          </div>
+
+          <div class="sync-control-panel">
+            <h3 class="subsection-title">版本控制与覆盖恢复</h3>
+            <p class="form-hint">上传会全量覆盖远端文件；下载会全量覆盖本地书签（删除远端不存在的本地项）。</p>
+            <div class="form-actions sync-direct-actions">
+              <button id="btn-sync-upload-full" class="opt-btn primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+                全量上传覆盖远端
+              </button>
+              <button id="btn-sync-download-full" class="opt-btn secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 12 12 17 17 12" />
+                  <line x1="12" y1="17" x2="12" y2="5" />
+                </svg>
+                全量下载覆盖本地
+              </button>
+            </div>
+            <div class="form-actions sync-history-actions">
+              <button id="btn-load-sync-versions" class="opt-btn secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 1 0 .49-9" />
+                </svg>
+                查看版本历史
+              </button>
+            </div>
+            <div id="sync-versions-box" class="sync-versions-box hidden">
+              <div class="sync-versions-header">
+                <strong>远端版本历史</strong>
+                <span id="sync-versions-count" class="sync-versions-count"></span>
+              </div>
+              <div id="sync-versions-list" class="sync-versions-list"></div>
+            </div>
+          </div>
         </section>
 
-      <!-- AI Configuration -->
-      <section class="opt-section">
-        <h2 class="section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          AI 分类配置
-        </h2>
+        <!-- AI Configuration -->
+        <section class="opt-section" data-collapsible="true">
+          <h2 class="section-title section-toggle" role="button" tabindex="0" aria-expanded="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            AI 分类配置
+            <span class="section-chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </h2>
 
-        <div class="form-group">
-          <label class="form-label">AI 提供商</label>
-          <div class="radio-group">
-            <label class="radio-card" id="radio-deepseek">
-              <input type="radio" name="ai-provider" value="deepseek">
-              <div class="radio-card-inner">
-                <div class="radio-icon deepseek-icon">DS</div>
-                <div>
-                  <strong>DeepSeek</strong>
-                  <span class="radio-hint">中国大陆可直接访问</span>
+          <div class="form-group">
+            <label class="form-label">AI 提供商</label>
+            <div class="radio-group">
+              <label class="radio-card" id="radio-deepseek">
+                <input type="radio" name="ai-provider" value="deepseek">
+                <div class="radio-card-inner">
+                  <div class="radio-icon deepseek-icon">DS</div>
+                  <div>
+                    <strong>DeepSeek</strong>
+                    <span class="radio-hint">中国大陆可直接访问</span>
+                  </div>
                 </div>
-              </div>
-            </label>
-            <label class="radio-card" id="radio-minimax">
-              <input type="radio" name="ai-provider" value="minimax">
-              <div class="radio-card-inner">
-                <div class="radio-icon minimax-icon">MM</div>
-                <div>
-                  <strong>MiniMax</strong>
-                  <span class="radio-hint">中国大陆可直接访问</span>
+              </label>
+              <label class="radio-card" id="radio-minimax">
+                <input type="radio" name="ai-provider" value="minimax">
+                <div class="radio-card-inner">
+                  <div class="radio-icon minimax-icon">MM</div>
+                  <div>
+                    <strong>MiniMax</strong>
+                    <span class="radio-hint">中国大陆可直接访问</span>
+                  </div>
                 </div>
-              </div>
-            </label>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <!-- DeepSeek Fields -->
-        <div id="deepseek-fields" class="ai-fields hidden">
-          <div class="form-group">
-            <label class="form-label" for="deepseek-key">API Key</label>
-            <input type="password" id="deepseek-key" class="form-input" placeholder="sk-xxxxxxxxxxxx">
-            <p class="form-hint"><a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">获取 DeepSeek API Key →</a></p>
+          <!-- DeepSeek Fields -->
+          <div id="deepseek-fields" class="ai-fields hidden">
+            <div class="form-group">
+              <label class="form-label" for="deepseek-key">API Key</label>
+              <input type="password" id="deepseek-key" class="form-input" placeholder="sk-xxxxxxxxxxxx">
+              <p class="form-hint"><a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">获取
+                  DeepSeek API Key →</a></p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="deepseek-model">模型</label>
+              <select id="deepseek-model" class="form-input">
+                <option value="deepseek-chat">deepseek-chat（推荐）</option>
+                <option value="deepseek-reasoner">deepseek-reasoner</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="deepseek-model">模型</label>
-            <select id="deepseek-model" class="form-input">
-              <option value="deepseek-chat">deepseek-chat（推荐）</option>
-              <option value="deepseek-reasoner">deepseek-reasoner</option>
-            </select>
-          </div>
-        </div>
 
-        <!-- MiniMax Fields -->
-        <div id="minimax-fields" class="ai-fields hidden">
-          <div class="form-group">
-            <label class="form-label" for="minimax-key">API Key</label>
-            <input type="password" id="minimax-key" class="form-input" placeholder="eyJhbGciOi...">
-            <p class="form-hint"><a href="https://platform.minimaxi.com/user-center/basic-information/interface-key" target="_blank" rel="noopener">获取 MiniMax API Key →</a></p>
+          <!-- MiniMax Fields -->
+          <div id="minimax-fields" class="ai-fields hidden">
+            <div class="form-group">
+              <label class="form-label" for="minimax-key">API Key</label>
+              <input type="password" id="minimax-key" class="form-input" placeholder="eyJhbGciOi...">
+              <p class="form-hint"><a href="https://platform.minimaxi.com/user-center/basic-information/interface-key"
+                  target="_blank" rel="noopener">获取 MiniMax API Key →</a></p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="minimax-group">Group ID</label>
+              <input type="text" id="minimax-group" class="form-input" placeholder="可选">
+              <p class="form-hint">如使用 v1 接口需要</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="minimax-model">模型</label>
+              <select id="minimax-model" class="form-input">
+                <option value="MiniMax-Text-01">MiniMax-Text-01（推荐）</option>
+                <option value="abab6.5s-chat">abab6.5s-chat</option>
+                <option value="abab5.5-chat">abab5.5-chat</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="minimax-group">Group ID</label>
-            <input type="text" id="minimax-group" class="form-input" placeholder="可选">
-            <p class="form-hint">如使用 v1 接口需要</p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="minimax-model">模型</label>
-            <select id="minimax-model" class="form-input">
-              <option value="MiniMax-Text-01">MiniMax-Text-01（推荐）</option>
-              <option value="abab6.5s-chat">abab6.5s-chat</option>
-              <option value="abab5.5-chat">abab5.5-chat</option>
-            </select>
-          </div>
-        </div>
 
-        <div id="ai-common-fields" class="ai-fields hidden">
-          <div class="form-actions">
-            <button id="btn-test-ai" class="opt-btn secondary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              测试连接
-            </button>
-            <button id="btn-save-ai" class="opt-btn primary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-              保存配置
-            </button>
+          <div id="ai-common-fields" class="ai-fields hidden">
+            <div class="form-actions">
+              <button id="btn-test-ai" class="opt-btn secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                测试连接
+              </button>
+              <button id="btn-save-ai" class="opt-btn primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                  <polyline points="17 21 17 13 7 13 7 21" />
+                  <polyline points="7 3 7 8 15 8" />
+                </svg>
+                保存配置
+              </button>
+            </div>
+            <div id="ai-test-result" class="opt-result hidden"></div>
           </div>
-          <div id="ai-test-result" class="opt-result hidden"></div>
-        </div>
-      </section>
+        </section>
       </div>
 
       <div class="opt-right">
-      <section class="opt-section" style="height: 100%; display: flex; flex-direction: column;">
-        <h2 class="section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-          AI 自动分类控制台
-        </h2>
-        <!-- 🚀 独立的 AI 自动分类操作面板 🚀 -->
-        <div class="ai-actions-panel">
-          <div class="ai-intro">
-            <p><strong>智能分类助手</strong>：系统将读取您当前的浏览器书签列表，经过 AI 会话分析并建议分类。操作进度会百分比展示。</p>
-          </div>
-          <button id="btn-ai-classify" class="opt-btn primary" style="width: 100%; justify-content: center;" disabled>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            开始 AI 自动分类
-          </button>
-          
-          <!-- 动态进度条 -->
-          <div id="ai-progress-box" class="hidden">
-            <div class="progress-container">
-              <div id="ai-progress-bar" class="progress-bar"></div>
+        <section class="opt-section" style="height: 100%; display: flex; flex-direction: column;">
+          <h2 class="section-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+            </svg>
+            AI 操作中心
+          </h2>
+          <div id="ai-main-view" class="ai-main-view">
+            <div class="ai-main-card">
+              <p class="ai-main-title">开始 AI 自动分类</p>
+              <p class="ai-main-desc">进入子界面后执行分析，你可以随时返回主界面。</p>
+              <button id="btn-enter-ai-analysis" class="opt-btn primary" style="width: 100%; justify-content: center;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+                进入 AI 分析子界面
+              </button>
             </div>
-            <p class="form-hint" id="ai-progress-text" style="text-align: right; margin-top: 4px;">正在分析书签：0%</p>
           </div>
 
-          <!-- AI 智能分类建议面板 -->
-          <div id="ai-suggestions" class="hidden">
-            <div class="ai-header-controls">
-              <h3 style="font-size: 14px; font-weight: 700;">AI 分类建议</h3>
-              <div class="ai-control-btns">
-                <button id="btn-accept-all">全部选定</button>
-                <button id="btn-reject-all">取消全选</button>
-                <button id="btn-cancel-ai" style="color: var(--accent-red); border-color: rgba(239, 68, 68, 0.4);">放弃返回</button>
+          <!-- 🚀 AI 子界面 🚀 -->
+          <div id="ai-sub-view" class="ai-sub-view hidden">
+            <div class="ai-sub-header">
+              <button id="btn-back-main" class="opt-btn secondary ai-back-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+                返回主界面
+              </button>
+            </div>
+
+            <div class="ai-actions-panel">
+              <div class="ai-intro">
+                <p><strong>智能分类助手</strong>：系统将读取您当前的浏览器书签列表，经过 AI 会话分析并建议分类。操作进度会百分比展示。</p>
+              </div>
+              <button id="btn-ai-classify" class="opt-btn primary" style="width: 100%; justify-content: center;"
+                disabled>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+                开始执行 AI 分析
+              </button>
+
+              <!-- 动态进度条 -->
+              <div id="ai-progress-box" class="hidden">
+                <div class="progress-container">
+                  <div id="ai-progress-bar" class="progress-bar"></div>
+                </div>
+                <p class="form-hint" id="ai-progress-text" style="text-align: right; margin-top: 4px;">正在分析书签：0%</p>
+              </div>
+
+              <!-- AI 智能分类建议面板 -->
+              <div id="ai-suggestions" class="hidden">
+                <div class="ai-header-controls">
+                  <h3 style="font-size: 14px; font-weight: 700;">AI 分类建议</h3>
+                  <div class="ai-control-btns">
+                    <button id="btn-cancel-ai"
+                      style="color: var(--accent-red); border-color: rgba(240, 90, 90, 0.4);">放弃返回</button>
+                  </div>
+                </div>
+
+                <div class="ai-rule-panel">
+                  <label for="ai-rule-input" class="form-label">自然语言调整规则</label>
+                  <textarea id="ai-rule-input" class="form-input ai-rule-input"
+                    placeholder="例如：把吉他谱收藏夹和音乐收藏夹合并为吉他谱收藏夹"></textarea>
+                  <div class="ai-rule-actions">
+                    <button id="btn-apply-ai-rule" class="opt-btn secondary">应用规则到建议</button>
+                  </div>
+                </div>
+
+                <!-- 分类标签导航 -->
+                <div id="category-tabs" class="category-tabs"></div>
+
+                <!-- 当前分类的操作栏 -->
+                <div id="category-action-bar" class="category-action-bar hidden">
+                  <span id="category-action-hint" class="form-hint" style="margin: 0;"></span>
+                  <div class="ai-control-btns">
+                    <button id="btn-accept-cat" class="opt-btn primary"
+                      style="padding: 6px 14px; font-size: 12.5px;">勾选此类</button>
+                    <button id="btn-reject-cat" class="opt-btn secondary"
+                      style="padding: 6px 14px; font-size: 12.5px;">取消勾选此类</button>
+                    <button id="btn-delete-selected" class="opt-btn danger"
+                      style="padding: 6px 14px; font-size: 12.5px;">标记此类为删除</button>
+                  </div>
+                </div>
+
+                <!-- 当前分类的建议列表 -->
+                <div id="suggestions-list" class="ai-suggestions-list"></div>
+                <button id="btn-apply-selected" class="opt-btn primary"
+                  style="width: 100%; margin-top: 16px; justify-content: center;">
+                  应用勾选变更
+                </button>
               </div>
             </div>
-            <div id="suggestions-list" class="ai-suggestions-list"></div>
-            <button id="btn-apply-selected" class="opt-btn primary" style="width: 100%; margin-top: 16px; justify-content: center;">
-              应用已选建议
-            </button>
           </div>
-          <!-- 结束 AI 面板 -->
-        </div>
-
         </section>
       </div>
     </main>
@@ -275,4 +414,5 @@
 
   <script src="options.js" type="module"></script>
 </body>
+
 </html>

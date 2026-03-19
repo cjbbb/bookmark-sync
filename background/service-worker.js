@@ -54,14 +54,23 @@ async function handleMessage(message) {
 
     case 'syncDownload': {
       const syncData = await SyncEngine.download();
-      return BookmarkManager.importFromSyncFormat(syncData);
+      return BookmarkManager.importFromSyncFormat(syncData, {
+        mode: 'overwrite',
+      });
     }
 
     case 'testSync':
       return SyncEngine.testConnection();
 
-    case 'createSyncRepo':
-      return SyncEngine.createRepository();
+    case 'getSyncVersions':
+      return SyncEngine.getVersions(payload?.limit || 20);
+
+    case 'restoreSyncVersion': {
+      const syncData = await SyncEngine.downloadVersion(payload.versionId);
+      return BookmarkManager.importFromSyncFormat(syncData, {
+        mode: 'overwrite',
+      });
+    }
 
     case 'getSyncConfig':
 
