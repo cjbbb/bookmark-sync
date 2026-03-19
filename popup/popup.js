@@ -167,7 +167,100 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+function formatTime(iso) {
+  if (!iso) return '-';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString('zh-CN');
+}
+
 // ─── Sync Panel ───
+let popupSyncVersions = [];
+
+function setSyncEnabled(enabled) {
+  $('#btn-sync-upload').disabled = !enabled;
+  $('#btn-sync-download').disabled = !enabled;
+  $('#btn-sync-load-versions').disabled = !enabled;
+}
+
+function renderPopupSyncVersions() {
+  const container = $('#popup-sync-versions');
+  container.innerHTML = '';
+
+  if (!popupSyncVersions.length) {
+    container.classList.remove('hidden');
+    container.innerHTML = '<div class="result-box">暂无历史记录，请先执行一次上传。</div>';
+    return;
+  }
+
+  container.classList.remove('hidden');
+  popupSyncVersions.forEach((v) => {
+    const item = document.createElement('div');
+    item.className = 'popup-sync-version-item';
+    item.innerHTML = `
+      <div class="popup-sync-version-id">${escapeHtml(v.shortId || (v.id || '').slice(0, 7))}</div>
+      <div class="popup-sync-version-meta">${escapeHtml(v.author || '未知作者')} · ${escapeHtml(formatTime(v.date))}</div>
+      <div class="popup-sync-version-msg">${escapeHtml(v.message || '无提交信息')}</div>
+      <div class="popup-sync-version-actions">
+        <button class="action-btn secondary popup-restore-btn" data-version-id="${escapeHtml(v.id)}">恢复并全部替换本地</button>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+
+  container.querySelectorAll('.popup-restore-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const versionId = btn.dataset.versionId;
+      if (!versionId) return;
+
+      const ok = confirm('将用该历史版本把本地书签全部替换，是否继续？');
+      if (!ok) return;
+
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '恢复中...';
+      try {
+        const result = await sendMessage('restoreSyncVersion', { versionId });
+        if (result?.error) throw new Error(result.error);
+
+        const moved = result?.moved || 0;
+        const updated = result?.updated || 0;
+        const added = result?.added || 0;
+        const removed = result?.removed || 0;
+        showResult('sync-result', `✅ 恢复完成：移动 ${moved}，更新 ${updated}，新增 ${added}，删除 ${removed}`, 'success');
+        showToast('已按历史版本替换本地', 'success');
+        await loadBookmarks();
+      } catch (err) {
+        showResult('sync-result', `❌ 恢复失败: ${err.message}`, 'error');
+        showToast('恢复失败', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+  });
+}
+
+async function loadPopupSyncVersions() {
+  const btn = $('#btn-sync-load-versions');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '加载中...';
+  try {
+    const versions = await sendMessage('getSyncVersions', { limit: 20 });
+    if (versions?.error) throw new Error(versions.error);
+    popupSyncVersions = Array.isArray(versions) ? versions : [];
+    renderPopupSyncVersions();
+    showToast(`已加载 ${popupSyncVersions.length} 条历史记录`, 'success');
+  } catch (err) {
+    showResult('sync-result', `❌ 加载历史记录失败: ${err.message}`, 'error');
+    showToast('加载历史失败', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+}
+
 async function initSyncPanel() {
   const config = await sendMessage('getSyncConfig');
   if (config && config.platform) {
@@ -178,15 +271,17 @@ async function initSyncPanel() {
     if (result.success) {
       dot.className = 'status-dot connected';
       text.textContent = result.message;
-      $('#btn-sync-upload').disabled = false;
-      $('#btn-sync-download').disabled = false;
+      setSyncEnabled(true);
+      await loadPopupSyncVersions();
     } else {
       dot.className = 'status-dot error';
       text.textContent = result.message;
+      setSyncEnabled(false);
     }
   } else {
     $('#sync-status-text').textContent =
       '未配置同步，请点击右上角⚙进入设置';
+    setSyncEnabled(false);
   }
 }
 
@@ -197,27 +292,35 @@ $('#btn-sync-upload').addEventListener('click', async () => {
   try {
     const result = await sendMessage('syncUpload');
     if (result.error) throw new Error(result.error);
-    showResult('sync-result', '✅ 书签已成功上传到远程仓库！', 'success');
+    showResult('sync-result', '✅ 上传成功，远端书签文件已全部替换。', 'success');
     showToast('上传成功', 'success');
+    await loadPopupSyncVersions();
   } catch (err) {
     showResult('sync-result', `❌ 上传失败: ${err.message}`, 'error');
     showToast('上传失败', 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>上传到远程`;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>上传并全部替换远端`;
   }
 });
 
 $('#btn-sync-download').addEventListener('click', async () => {
+  const ok = confirm('该操作会将本地书签全部替换为远端版本，是否继续？');
+  if (!ok) return;
+
   const btn = $('#btn-sync-download');
   btn.disabled = true;
   btn.textContent = '下载中...';
   try {
     const result = await sendMessage('syncDownload');
     if (result.error) throw new Error(result.error);
+    const moved = result?.moved || 0;
+    const updated = result?.updated || 0;
+    const added = result?.added || 0;
+    const removed = result?.removed || 0;
     showResult(
       'sync-result',
-      `✅ 同步完成！新增 ${result.added} 个书签，跳过 ${result.skipped} 个已有书签。`,
+      `✅ 替换完成：移动 ${moved}，更新 ${updated}，新增 ${added}，删除 ${removed}。`,
       'success'
     );
     showToast('下载完成', 'success');
@@ -227,8 +330,12 @@ $('#btn-sync-download').addEventListener('click', async () => {
     showToast('下载失败', 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>从远程下载`;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>下载并全部替换本地`;
   }
+});
+
+$('#btn-sync-load-versions').addEventListener('click', async () => {
+  await loadPopupSyncVersions();
 });
 
 function showResult(id, text, type) {

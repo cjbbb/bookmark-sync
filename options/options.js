@@ -32,6 +32,11 @@ function showResult(id, text, type) {
   el.className = `opt-result ${type}`;
 }
 
+function showSyncOperationResult(text, type) {
+  const targetId = $('#sync-ops-result') ? 'sync-ops-result' : 'sync-test-result';
+  showResult(targetId, text, type);
+}
+
 function formatTime(iso) {
   if (!iso) return '-';
   const d = new Date(iso);
@@ -167,11 +172,11 @@ $('#btn-sync-upload-full').addEventListener('click', async () => {
     if (result?.error) {
       throw new Error(result.error);
     }
-    showToast('全量上传完成，已覆盖远端书签文件', 'success', 3200);
-    showResult('sync-test-result', '✅ 全量上传成功（远端已覆盖）。', 'success');
+    showToast('上传完成，远端已全部替换为本地书签', 'success', 3200);
+    showSyncOperationResult('✅ 上传成功：远端已全部替换。', 'success');
   } catch (err) {
     showToast(`上传失败: ${err.message}`, 'error', 3500);
-    showResult('sync-test-result', `❌ 上传失败: ${err.message}`, 'error');
+    showSyncOperationResult(`❌ 上传失败: ${err.message}`, 'error');
   } finally {
     btn.disabled = false;
     btn.textContent = original;
@@ -185,7 +190,7 @@ $('#btn-sync-download-full').addEventListener('click', async () => {
     return;
   }
 
-  const ok = confirm('该操作会以远端版本全量覆盖本地书签（会删除本地多余项），是否继续？');
+  const ok = confirm('该操作会用远端版本将本地书签全部替换（会删除本地多余项），是否继续？');
   if (!ok) return;
 
   const btn = $('#btn-sync-download-full');
@@ -203,11 +208,11 @@ $('#btn-sync-download-full').addEventListener('click', async () => {
     const updated = result?.updated || 0;
     const added = result?.added || 0;
     const removed = result?.removed || 0;
-    showToast(`覆盖完成：移动 ${moved}，更新 ${updated}，新增 ${added}，删除 ${removed}`, 'success', 3500);
-    showResult('sync-test-result', '✅ 全量下载并覆盖本地成功。', 'success');
+    showToast(`全部替换完成：移动 ${moved}，更新 ${updated}，新增 ${added}，删除 ${removed}`, 'success', 3500);
+    showSyncOperationResult('✅ 下载成功：本地已按远端全部替换。', 'success');
   } catch (err) {
     showToast(`下载失败: ${err.message}`, 'error', 3500);
-    showResult('sync-test-result', `❌ 下载失败: ${err.message}`, 'error');
+    showSyncOperationResult(`❌ 下载失败: ${err.message}`, 'error');
   } finally {
     btn.disabled = false;
     btn.textContent = original;
@@ -253,7 +258,7 @@ function renderSyncVersions() {
       const versionId = btn.dataset.versionId;
       if (!versionId) return;
 
-      const ok = confirm('恢复后将按所选历史版本覆盖当前本地书签（会删除不在该版本中的书签）。是否继续？');
+      const ok = confirm('恢复后将用所选历史版本把当前本地书签全部替换（会删除不在该版本中的书签）。是否继续？');
       if (!ok) return;
 
       const originalText = btn.textContent;
@@ -271,10 +276,10 @@ function renderSyncVersions() {
         const added = result.added || 0;
         const removed = result.removed || 0;
         showToast(`恢复完成：移动 ${moved}，更新 ${updated}，新增 ${added}，删除 ${removed}`, 'success', 3500);
-        showResult('sync-test-result', '✅ 已恢复到所选历史版本。', 'success');
+        showSyncOperationResult('✅ 已按所选历史版本全部替换本地。', 'success');
       } catch (err) {
         showToast(`恢复失败: ${err.message}`, 'error', 3500);
-        showResult('sync-test-result', `❌ 恢复失败: ${err.message}`, 'error');
+        showSyncOperationResult(`❌ 恢复失败: ${err.message}`, 'error');
       } finally {
         btn.disabled = false;
         btn.textContent = originalText;
@@ -306,7 +311,7 @@ $('#btn-load-sync-versions').addEventListener('click', async () => {
     showToast(`已加载 ${syncVersions.length} 条版本历史`, 'success');
   } catch (err) {
     showToast(`加载历史失败: ${err.message}`, 'error');
-    showResult('sync-test-result', `❌ 加载版本历史失败: ${err.message}`, 'error');
+    showSyncOperationResult(`❌ 加载历史记录失败: ${err.message}`, 'error');
   } finally {
     btn.disabled = false;
     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-9"/></svg>查看版本历史`;

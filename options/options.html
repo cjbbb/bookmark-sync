@@ -164,44 +164,6 @@
             <div id="sync-test-result" class="opt-result hidden"></div>
           </div>
 
-          <div class="sync-control-panel">
-            <h3 class="subsection-title">版本控制与覆盖恢复</h3>
-            <p class="form-hint">上传会全量覆盖远端文件；下载会全量覆盖本地书签（删除远端不存在的本地项）。</p>
-            <div class="form-actions sync-direct-actions">
-              <button id="btn-sync-upload-full" class="opt-btn primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="17 8 12 3 7 8" />
-                  <line x1="12" y1="3" x2="12" y2="15" />
-                </svg>
-                全量上传覆盖远端
-              </button>
-              <button id="btn-sync-download-full" class="opt-btn secondary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 12 12 17 17 12" />
-                  <line x1="12" y1="17" x2="12" y2="5" />
-                </svg>
-                全量下载覆盖本地
-              </button>
-            </div>
-            <div class="form-actions sync-history-actions">
-              <button id="btn-load-sync-versions" class="opt-btn secondary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="1 4 1 10 7 10" />
-                  <path d="M3.51 15a9 9 0 1 0 .49-9" />
-                </svg>
-                查看版本历史
-              </button>
-            </div>
-            <div id="sync-versions-box" class="sync-versions-box hidden">
-              <div class="sync-versions-header">
-                <strong>远端版本历史</strong>
-                <span id="sync-versions-count" class="sync-versions-count"></span>
-              </div>
-              <div id="sync-versions-list" class="sync-versions-list"></div>
-            </div>
-          </div>
         </section>
 
         <!-- AI Configuration -->
@@ -402,6 +364,54 @@
                 </button>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section class="opt-section version-ops-section">
+          <h2 class="section-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v5h5" />
+              <path d="M3.05 13a9 9 0 1 0 .5-5.5L8 8" />
+            </svg>
+            版本控制与覆盖恢复
+          </h2>
+          <div class="sync-control-panel sync-control-panel-standalone">
+            <p class="form-hint">上传会将远端文件全部替换为本地最新书签；下载会将本地书签全部替换为远端版本。</p>
+            <div class="form-actions sync-direct-actions">
+              <button id="btn-sync-upload-full" class="opt-btn primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+                上传并全部替换远端
+              </button>
+              <button id="btn-sync-download-full" class="opt-btn secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 12 12 17 17 12" />
+                  <line x1="12" y1="17" x2="12" y2="5" />
+                </svg>
+                下载并全部替换本地
+              </button>
+            </div>
+            <div class="form-actions sync-history-actions">
+              <button id="btn-load-sync-versions" class="opt-btn secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 1 0 .49-9" />
+                </svg>
+                查看历史记录
+              </button>
+            </div>
+            <div id="sync-versions-box" class="sync-versions-box hidden">
+              <div class="sync-versions-header">
+                <strong>远端历史记录</strong>
+                <span id="sync-versions-count" class="sync-versions-count"></span>
+              </div>
+              <div id="sync-versions-list" class="sync-versions-list"></div>
+            </div>
+            <div id="sync-ops-result" class="opt-result hidden"></div>
           </div>
         </section>
       </div>

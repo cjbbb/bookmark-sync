@@ -544,6 +544,16 @@ input[type="password"]:focus {
   border-top: 1px dashed var(--border-subtle);
 }
 
+.sync-control-panel.sync-control-panel-standalone {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.version-ops-section {
+  margin-top: 16px;
+}
+
 .subsection-title {
   font-size: 13px;
   font-weight: 700;
