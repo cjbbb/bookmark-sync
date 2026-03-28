@@ -10,7 +10,6 @@
 
 <body>
   <div class="app">
-    <!-- Header -->
     <header class="header">
       <div class="header-left">
         <div class="logo">
@@ -19,9 +18,13 @@
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
           </svg>
         </div>
-        <h1 class="header-title">智能书签</h1>
+        <div class="header-copy">
+          <h1 class="header-title">智能书签</h1>
+          <p class="header-subtitle">本地浏览与同步控制</p>
+        </div>
       </div>
-      <div class="header-right" style="display: flex; gap: 6px;">
+
+      <div class="header-right">
         <button id="btn-theme-toggle" class="icon-btn" title="切换主题">
           <span class="theme-icon">🌙</span>
         </button>
@@ -36,83 +39,131 @@
       </div>
     </header>
 
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </svg>
-      <input type="text" id="search-input" placeholder="搜索书签..." autocomplete="off">
-    </div>
-
-    <!-- Tab Navigation -->
-    <nav class="tabs">
-      <button class="tab active" data-tab="bookmarks">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+    <section class="toolbar">
+      <div class="search-bar">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
-        书签
-      </button>
-      <button class="tab" data-tab="sync">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="23 4 23 10 17 10" />
-          <polyline points="1 20 1 14 7 14" />
-          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-        </svg>
-        同步
-      </button>
-    </nav>
+        <input type="text" id="search-input" placeholder="搜索书签..." autocomplete="off">
+      </div>
 
+      <nav class="tabs">
+        <button class="tab active" data-tab="bookmarks">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+          </svg>
+          书签
+        </button>
+        <button class="tab" data-tab="sync">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10" />
+            <polyline points="1 20 1 14 7 14" />
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+          </svg>
+          同步
+        </button>
+      </nav>
+    </section>
 
-    <!-- Tab Content: Bookmarks -->
+    <section class="overview-strip" aria-label="书签概览">
+      <div class="overview-card">
+        <span class="overview-label">书签总数</span>
+        <strong id="overview-bookmarks">-</strong>
+      </div>
+      <div class="overview-card">
+        <span class="overview-label">文件夹</span>
+        <strong id="overview-folders">-</strong>
+      </div>
+      <div class="overview-card overview-card-wide">
+        <span class="overview-label">当前状态</span>
+        <strong id="overview-context">正在载入书签</strong>
+      </div>
+    </section>
+
     <div id="panel-bookmarks" class="panel active">
-      <div id="bookmark-tree" class="bookmark-tree">
-        <div class="loading-placeholder">
-          <div class="spinner"></div>
-          <p>加载书签中...</p>
+      <section class="panel-card panel-card-tree">
+        <div class="panel-card-head">
+          <div>
+            <h2 class="panel-title">本地书签</h2>
+            <p class="panel-desc">展开目录，快速查看当前浏览器中的书签结构。</p>
+          </div>
         </div>
-      </div>
+
+        <div id="bookmark-tree" class="bookmark-tree">
+          <div class="loading-placeholder">
+            <div class="spinner"></div>
+            <p>加载书签中...</p>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <!-- Tab Content: Sync -->
     <div id="panel-sync" class="panel">
-      <div class="sync-status-card">
-        <div class="status-dot" id="sync-status-dot"></div>
-        <span id="sync-status-text">未配置同步</span>
-      </div>
-      <p class="sync-explain">上传会将远端文件全部替换为本地书签；下载会将本地书签全部替换为远端版本。</p>
-      <div class="sync-actions">
-        <button id="btn-sync-upload" class="action-btn primary" disabled>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="16 16 12 12 8 16" />
-            <line x1="12" y1="12" x2="12" y2="21" />
-            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
-          </svg>
-          上传并全部替换远端
-        </button>
-        <button id="btn-sync-download" class="action-btn secondary" disabled>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="8 17 12 21 16 17" />
-            <line x1="12" y1="12" x2="12" y2="21" />
-            <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
-          </svg>
-          下载并全部替换本地
-        </button>
-      </div>
+      <div class="sync-shell">
+        <section class="panel-card sync-summary-card">
+          <div class="sync-status-top">
+            <div class="sync-status-marker">
+              <div class="status-dot" id="sync-status-dot"></div>
+              <span class="sync-status-label">同步连接</span>
+            </div>
+            <span id="sync-platform-badge" class="status-badge">未配置</span>
+          </div>
+          <div id="sync-status-text" class="sync-status-main">未配置同步</div>
+          <p class="sync-status-desc">上传会覆盖远端快照；下载与历史恢复会覆盖本地书签。适合在你确认目标版本后执行。</p>
+        </section>
 
-      <div class="sync-version-card">
-        <div class="sync-version-card-head">
-          <strong>历史记录</strong>
-          <button id="btn-sync-load-versions" class="micro-action" disabled>刷新</button>
-        </div>
-        <div id="popup-sync-versions" class="popup-sync-versions hidden"></div>
+        <section class="panel-card">
+          <div class="panel-card-head panel-card-head-compact">
+            <div>
+              <h2 class="panel-title">覆盖操作</h2>
+              <p class="panel-desc">两个动作都会直接改写目标侧数据。</p>
+            </div>
+          </div>
+
+          <div class="sync-action-grid">
+            <div class="sync-action-item">
+              <button id="btn-sync-upload" class="action-btn primary" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 16 12 12 8 16" />
+                  <line x1="12" y1="12" x2="12" y2="21" />
+                  <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+                </svg>
+                上传并替换远端
+              </button>
+              <p class="sync-action-note">将当前本地书签完整写入远端文件。</p>
+            </div>
+
+            <div class="sync-action-item">
+              <button id="btn-sync-download" class="action-btn secondary" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="8 17 12 21 16 17" />
+                  <line x1="12" y1="12" x2="12" y2="21" />
+                  <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+                </svg>
+                下载并替换本地
+              </button>
+              <p class="sync-action-note">用远端快照完整替换当前本地书签。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-card sync-history-card">
+          <div class="panel-card-head panel-card-head-compact">
+            <div>
+              <h2 class="panel-title">历史版本</h2>
+              <p class="panel-desc">查看最近同步记录，并按版本恢复到本地。</p>
+            </div>
+            <button id="btn-sync-load-versions" class="micro-action" disabled>刷新</button>
+          </div>
+          <div id="popup-sync-versions" class="popup-sync-versions hidden"></div>
+        </section>
+
+        <div id="sync-result" class="result-box hidden"></div>
       </div>
-      <div id="sync-result" class="result-box hidden"></div>
     </div>
 
-
-    <!-- Toast Notification -->
     <div id="toast" class="toast hidden"></div>
   </div>
 

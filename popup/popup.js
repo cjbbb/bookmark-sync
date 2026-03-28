@@ -24,6 +24,15 @@ function showToast(text, type = 'info', duration = 2500) {
   }, duration);
 }
 
+function renderEmptyState(container, title, note = '') {
+  container.innerHTML = `
+    <div class="empty-state">
+      <p class="empty-state-title">${escapeHtml(title)}</p>
+      ${note ? `<p class="empty-state-note">${escapeHtml(note)}</p>` : ''}
+    </div>
+  `;
+}
+
 // ─── Tab Navigation ───
 $$('.tab').forEach((tab) => {
   tab.addEventListener('click', () => {
@@ -55,10 +64,16 @@ function renderSearchResults(bookmarks) {
   const container = $('#bookmark-tree');
   container.innerHTML = '';
   if (!bookmarks || bookmarks.length === 0) {
-    container.innerHTML =
-      '<p style="color:var(--text-muted);text-align:center;padding:30px 0;">未找到匹配的书签</p>';
+    updateOverview({ context: '未找到匹配结果' });
+    renderEmptyState(container, '未找到匹配书签', '试试更短的关键词，或回到完整书签树查看。');
     return;
   }
+
+  const matchCount = bookmarks.filter((bookmark) => bookmark.url).length;
+  updateOverview({
+    bookmarks: matchCount,
+    context: `搜索命中 ${matchCount} 项`,
+  });
 
   bookmarks.forEach((b) => {
     if (!b.url) return;
@@ -79,6 +94,7 @@ function renderSearchResults(bookmarks) {
 async function loadBookmarks() {
   const tree = await sendMessage('getBookmarkTree');
   if (tree.error) {
+    updateOverview({ context: '书签加载失败' });
     showToast(tree.error, 'error');
     return;
   }
@@ -88,14 +104,33 @@ async function loadBookmarks() {
 function renderTree(nodes) {
   const container = $('#bookmark-tree');
   container.innerHTML = '';
-  if (!Array.isArray(nodes)) return;
-  nodes.forEach((node) => {
-    const fragment = buildTreeNode(node);
+  if (!Array.isArray(nodes)) {
+    updateOverview({ context: '暂无可展示书签' });
+    renderEmptyState(container, '暂无可展示书签');
+    return;
+  }
+
+  const normalizedNodes = unwrapRootNodes(nodes);
+  const stats = countTreeStats(normalizedNodes);
+
+  updateOverview({
+    bookmarks: stats.bookmarks,
+    folders: stats.folders,
+    context: stats.bookmarks ? '本地书签已同步展示' : '当前没有书签内容',
+  });
+
+  if (!normalizedNodes.length) {
+    renderEmptyState(container, '当前没有书签内容', '请先在浏览器中添加书签后再查看。');
+    return;
+  }
+
+  normalizedNodes.forEach((node) => {
+    const fragment = buildTreeNode(node, 0);
     if (fragment) container.appendChild(fragment);
   });
 }
 
-function buildTreeNode(node) {
+function buildTreeNode(node, depth = 0) {
   if (node.url) {
     // Bookmark link
     const el = document.createElement('a');
@@ -113,6 +148,9 @@ function buildTreeNode(node) {
   if (node.children && node.children.length > 0) {
     const folder = document.createElement('div');
     folder.className = 'folder-item';
+    if (depth === 0) {
+      folder.classList.add('open');
+    }
 
     const bookmarkCount = countBookmarks(node);
 
@@ -131,7 +169,7 @@ function buildTreeNode(node) {
     const childrenContainer = document.createElement('div');
     childrenContainer.className = 'folder-children';
     node.children.forEach((child) => {
-      const childEl = buildTreeNode(child);
+      const childEl = buildTreeNode(child, depth + 1);
       if (childEl) childrenContainer.appendChild(childEl);
     });
 
@@ -150,6 +188,62 @@ function countBookmarks(node) {
     node.children.forEach((c) => (count += countBookmarks(c)));
   }
   return count;
+}
+
+function unwrapRootNodes(nodes) {
+  return nodes.flatMap((node) => {
+    if (!node.url && Array.isArray(node.children) && (node.id === '0' || !node.title)) {
+      return unwrapRootNodes(node.children);
+    }
+    return [node];
+  });
+}
+
+function countTreeStats(nodes) {
+  const stats = { bookmarks: 0, folders: 0 };
+
+  const walk = (node) => {
+    if (node.url) {
+      stats.bookmarks += 1;
+      return;
+    }
+
+    if (node.title) {
+      stats.folders += 1;
+    }
+
+    if (Array.isArray(node.children)) {
+      node.children.forEach(walk);
+    }
+  };
+
+  nodes.forEach(walk);
+  return stats;
+}
+
+function updateOverview({ bookmarks, folders, context } = {}) {
+  if (typeof bookmarks === 'number') {
+    $('#overview-bookmarks').textContent = String(bookmarks);
+  }
+  if (typeof folders === 'number') {
+    $('#overview-folders').textContent = String(folders);
+  }
+  if (typeof context === 'string') {
+    $('#overview-context').textContent = context;
+  }
+}
+
+function formatPlatformLabel(platform) {
+  if (platform === 'github') return 'GitHub';
+  if (platform === 'gitlab') return 'GitLab';
+  return '未配置';
+}
+
+function setSyncPlatformBadge(platform, tone = 'default') {
+  const badge = $('#sync-platform-badge');
+  if (!badge) return;
+  badge.textContent = formatPlatformLabel(platform);
+  badge.className = `status-badge${tone ? ` ${tone}` : ''}`;
 }
 
 function getFaviconUrl(url) {
@@ -189,7 +283,7 @@ function renderPopupSyncVersions() {
 
   if (!popupSyncVersions.length) {
     container.classList.remove('hidden');
-    container.innerHTML = '<div class="result-box">暂无历史记录，请先执行一次上传。</div>';
+    renderEmptyState(container, '暂无历史记录', '先执行一次上传，之后这里会展示最近远端快照。');
     return;
   }
 
@@ -241,7 +335,7 @@ function renderPopupSyncVersions() {
   });
 }
 
-async function loadPopupSyncVersions() {
+async function loadPopupSyncVersions({ silent = false } = {}) {
   const btn = $('#btn-sync-load-versions');
   const original = btn.textContent;
   btn.disabled = true;
@@ -251,10 +345,14 @@ async function loadPopupSyncVersions() {
     if (versions?.error) throw new Error(versions.error);
     popupSyncVersions = Array.isArray(versions) ? versions : [];
     renderPopupSyncVersions();
-    showToast(`已加载 ${popupSyncVersions.length} 条历史记录`, 'success');
+    if (!silent) {
+      showToast(`已加载 ${popupSyncVersions.length} 条历史记录`, 'success');
+    }
   } catch (err) {
     showResult('sync-result', `❌ 加载历史记录失败: ${err.message}`, 'error');
-    showToast('加载历史失败', 'error');
+    if (!silent) {
+      showToast('加载历史失败', 'error');
+    }
   } finally {
     btn.disabled = false;
     btn.textContent = original;
@@ -264,6 +362,7 @@ async function loadPopupSyncVersions() {
 async function initSyncPanel() {
   const config = await sendMessage('getSyncConfig');
   if (config && config.platform) {
+    setSyncPlatformBadge(config.platform);
     // Test connection
     const result = await sendMessage('testSync');
     const dot = $('#sync-status-dot');
@@ -271,16 +370,19 @@ async function initSyncPanel() {
     if (result.success) {
       dot.className = 'status-dot connected';
       text.textContent = result.message;
+      setSyncPlatformBadge(config.platform, 'is-ready');
       setSyncEnabled(true);
-      await loadPopupSyncVersions();
+      await loadPopupSyncVersions({ silent: true });
     } else {
       dot.className = 'status-dot error';
       text.textContent = result.message;
+      setSyncPlatformBadge(config.platform, 'is-error');
       setSyncEnabled(false);
     }
   } else {
     $('#sync-status-text').textContent =
       '未配置同步，请点击右上角⚙进入设置';
+    setSyncPlatformBadge('', '');
     setSyncEnabled(false);
   }
 }
@@ -300,7 +402,7 @@ $('#btn-sync-upload').addEventListener('click', async () => {
     showToast('上传失败', 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>上传并全部替换远端`;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>上传并替换远端`;
   }
 });
 
@@ -330,7 +432,7 @@ $('#btn-sync-download').addEventListener('click', async () => {
     showToast('下载失败', 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>下载并全部替换本地`;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>下载并替换本地`;
   }
 });
 
@@ -384,4 +486,3 @@ $('#btn-theme-toggle').addEventListener('click', () => {
   await loadBookmarks();
   initSyncPanel();
 })();
-

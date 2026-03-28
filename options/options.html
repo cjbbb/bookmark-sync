@@ -4,421 +4,982 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>智能书签同步 - 设置</title>
+  <title>智能书签治理台</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="options.css">
 </head>
 
 <body>
-  <div class="options-app">
-    <!-- Header -->
-    <header class="opt-header">
-      <div class="opt-header-inner">
-        <div class="opt-logo">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-          </svg>
-        </div>
-        <div>
-          <h1>智能书签同步</h1>
-          <p class="opt-subtitle">配置同步与 AI 分类</p>
-        </div>
-        <!-- 主题切换开关 -->
-        <div class="theme-toggle" style="margin-left: auto;">
-          <label class="switch-card" id="btn-theme-toggle" title="切换明暗主题">
-            <span class="theme-icon">🌙</span>
-          </label>
-        </div>
-      </div>
-    </header>
-
-
-    <main class="opt-main dashboard-grid">
-      <div class="opt-left">
-        <!-- Sync Configuration -->
-        <section class="opt-section" data-collapsible="true">
-          <h2 class="section-title section-toggle" role="button" tabindex="0" aria-expanded="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="23 4 23 10 17 10" />
-              <polyline points="1 20 1 14 7 14" />
-              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+  <div class="console-app">
+    <aside class="console-sidebar">
+      <div class="sidebar-primary">
+        <div class="sidebar-brand">
+          <div class="brand-logo" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 4h8a4 4 0 0 1 4 4v12l-6-3.8L6 20V4z" />
+              <path d="M9 9h6" />
+              <path d="M9 12h4" />
             </svg>
-            同步配置
-            <span class="section-chevron" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </span>
-          </h2>
+          </div>
+          <div class="brand-copy">
+            <strong>智能书签</strong>
+            <span>AI Governance Console</span>
+          </div>
+        </div>
 
-          <div class="form-group">
-            <label class="form-label">平台选择</label>
-            <div class="radio-group">
-              <label class="radio-card" id="radio-gitlab">
-                <input type="radio" name="platform" value="gitlab">
-                <div class="radio-card-inner">
-                  <div class="radio-icon gitlab-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                      <path
-                        d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <strong>GitLab</strong>
-                    <span class="radio-hint">中国大陆可直接访问</span>
-                  </div>
-                </div>
-              </label>
-              <label class="radio-card" id="radio-github">
-                <input type="radio" name="platform" value="github">
-                <div class="radio-card-inner">
-                  <div class="radio-icon github-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                      <path
-                        d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <strong>GitHub</strong>
-                    <span class="radio-hint">需可访问 github.com</span>
-                  </div>
-                </div>
-              </label>
+        <button class="sidebar-sync-cta" data-target="version-control-section" type="button">
+          <span class="sidebar-sync-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 0 1-15.5 6.36" />
+              <path d="M3 12a9 9 0 0 1 15.5-6.36" />
+              <polyline points="7 17 5 19 3 17" />
+              <polyline points="17 7 19 5 21 7" />
+            </svg>
+          </span>
+          <span class="sidebar-sync-copy">
+            <strong>同步书签</strong>
+            <small>快速进入版本与回滚控制台</small>
+          </span>
+        </button>
+
+        <section class="sidebar-manage-card" aria-label="管理分组">
+          <div class="sidebar-manage-head">
+            <div>
+              <p class="sidebar-note-label">管理</p>
+              <strong>按资产与治理切换</strong>
+            </div>
+            <div class="sidebar-manage-tabs" role="tablist" aria-label="管理导航层级">
+              <button class="sidebar-manage-tab active" type="button" data-nav-group="assets">书签</button>
+              <button class="sidebar-manage-tab" type="button" data-nav-group="governance">治理</button>
             </div>
           </div>
 
-          <!-- GitLab Fields -->
-          <div id="gitlab-fields" class="platform-fields hidden">
-            <div class="form-group">
-              <label class="form-label" for="gitlab-url">GitLab 地址</label>
-              <input type="url" id="gitlab-url" class="form-input" placeholder="https://gitlab.com"
-                value="https://gitlab.com">
-              <p class="form-hint">如使用自建 GitLab，请输入完整地址</p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="gitlab-token">Personal Access Token</label>
-              <input type="password" id="gitlab-token" class="form-input" placeholder="glpat-xxxxxxxxxxxx">
-              <p class="form-hint">需要 <code>api</code> 权限。<a
-                  href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank" rel="noopener">生成
-                  Token →</a></p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="gitlab-project">项目 ID 或路径</label>
-              <input type="text" id="gitlab-project" class="form-input" placeholder="12345 或 username/bookmarks">
-              <p class="form-hint">可在项目主页找到数字 ID，或使用 URL 路径如 <code>username/bookmarks</code></p>
-            </div>
-          </div>
-
-          <!-- GitHub Fields -->
-          <div id="github-fields" class="platform-fields hidden">
-            <div class="form-group">
-              <label class="form-label" for="github-token">Personal Access Token</label>
-              <input type="password" id="github-token" class="form-input" placeholder="ghp_xxxxxxxxxxxx">
-              <p class="form-hint">需要 <code>repo</code> 权限。<a href="https://github.com/settings/tokens/new"
-                  target="_blank" rel="noopener">生成 Token →</a></p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="github-owner">仓库所有者</label>
-              <input type="text" id="github-owner" class="form-input" placeholder="your-username">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="github-repo">仓库名</label>
-              <input type="text" id="github-repo" class="form-input" placeholder="bookmarks">
-            </div>
-          </div>
-
-          <!-- Common Fields -->
-          <div id="common-fields" class="platform-fields hidden">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="sync-branch">分支</label>
-                <input type="text" id="sync-branch" class="form-input" value="main" placeholder="main">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="sync-filepath">文件路径</label>
-                <input type="text" id="sync-filepath" class="form-input" value="bookmarks.json"
-                  placeholder="bookmarks.json">
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button id="btn-test-sync" class="opt-btn secondary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
+          <nav class="console-nav" aria-label="控制台导航">
+            <button class="console-nav-link active" data-target="sync-config-section" data-nav-group="assets">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 12h16" />
+                  <path d="M4 6h10" />
+                  <path d="M4 18h12" />
                 </svg>
-                测试连接
-              </button>
-              <button id="btn-save-sync" class="opt-btn primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                  <polyline points="17 21 17 13 7 13 7 21" />
-                  <polyline points="7 3 7 8 15 8" />
+              </span>
+              <span class="nav-copy">
+                <strong>同步配置</strong>
+                <small id="nav-sync-summary">未配置</small>
+              </span>
+            </button>
+            <button class="console-nav-link" data-target="version-control-section" data-nav-group="assets">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 12a9 9 0 1 0 9-9" />
+                  <path d="M3 4v8h8" />
                 </svg>
-                保存配置
-              </button>
-            </div>
-            <div id="sync-test-result" class="opt-result hidden"></div>
-          </div>
-
+              </span>
+              <span class="nav-copy">
+                <strong>版本控制</strong>
+                <small id="nav-version-summary">等待加载</small>
+              </span>
+            </button>
+            <button class="console-nav-link" data-target="ai-classification-section" data-nav-group="governance">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v18" />
+                  <path d="M6 15l6-12 6 12" />
+                </svg>
+              </span>
+              <span class="nav-copy">
+                <strong>AI 分类</strong>
+                <small id="nav-ai-summary">未配置</small>
+              </span>
+            </button>
+            <button class="console-nav-link" data-target="bookmark-health-section" data-nav-group="governance">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21s-6.5-4.35-8.5-8.23C1.53 8.93 3.03 5 6.78 5c2.12 0 3.14 1.2 5.22 3.23C14.08 6.2 15.1 5 17.22 5 20.97 5 22.47 8.93 20.5 12.77 18.5 16.65 12 21 12 21z" />
+                </svg>
+              </span>
+              <span class="nav-copy">
+                <strong>书签体检</strong>
+                <small id="nav-health-summary">未检测</small>
+              </span>
+            </button>
+            <button class="console-nav-link" data-target="duplicate-cleanup-section" data-nav-group="governance">
+              <span class="nav-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="8" y="8" width="10" height="10" rx="2" />
+                  <rect x="4" y="4" width="10" height="10" rx="2" />
+                </svg>
+              </span>
+              <span class="nav-copy">
+                <strong>重复清理</strong>
+                <small id="nav-duplicate-summary">未检测</small>
+              </span>
+            </button>
+          </nav>
         </section>
 
-        <!-- AI Configuration -->
-        <section class="opt-section" data-collapsible="true">
-          <h2 class="section-title section-toggle" role="button" tabindex="0" aria-expanded="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
-            AI 分类配置
-            <span class="section-chevron" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </span>
-          </h2>
-
-          <div class="form-group">
-            <label class="form-label">AI 提供商</label>
-            <div class="radio-group">
-              <label class="radio-card" id="radio-deepseek">
-                <input type="radio" name="ai-provider" value="deepseek">
-                <div class="radio-card-inner">
-                  <div class="radio-icon deepseek-icon">DS</div>
-                  <div>
-                    <strong>DeepSeek</strong>
-                    <span class="radio-hint">中国大陆可直接访问</span>
-                  </div>
-                </div>
-              </label>
-              <label class="radio-card" id="radio-minimax">
-                <input type="radio" name="ai-provider" value="minimax">
-                <div class="radio-card-inner">
-                  <div class="radio-icon minimax-icon">MM</div>
-                  <div>
-                    <strong>MiniMax</strong>
-                    <span class="radio-hint">中国大陆可直接访问</span>
-                  </div>
-                </div>
-              </label>
+        <section class="sidebar-tree-card" aria-label="本地书签结构">
+          <div class="sidebar-tree-head">
+            <div>
+              <p class="sidebar-note-label">本地书签</p>
+              <strong>当前层级结构</strong>
             </div>
+            <span id="sidebar-bookmark-count" class="status-badge muted">0 条</span>
           </div>
-
-          <!-- DeepSeek Fields -->
-          <div id="deepseek-fields" class="ai-fields hidden">
-            <div class="form-group">
-              <label class="form-label" for="deepseek-key">API Key</label>
-              <input type="password" id="deepseek-key" class="form-input" placeholder="sk-xxxxxxxxxxxx">
-              <p class="form-hint"><a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">获取
-                  DeepSeek API Key →</a></p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="deepseek-model">模型</label>
-              <select id="deepseek-model" class="form-input">
-                <option value="deepseek-chat">deepseek-chat（推荐）</option>
-                <option value="deepseek-reasoner">deepseek-reasoner</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- MiniMax Fields -->
-          <div id="minimax-fields" class="ai-fields hidden">
-            <div class="form-group">
-              <label class="form-label" for="minimax-key">API Key</label>
-              <input type="password" id="minimax-key" class="form-input" placeholder="eyJhbGciOi...">
-              <p class="form-hint"><a href="https://platform.minimaxi.com/user-center/basic-information/interface-key"
-                  target="_blank" rel="noopener">获取 MiniMax API Key →</a></p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="minimax-group">Group ID</label>
-              <input type="text" id="minimax-group" class="form-input" placeholder="可选">
-              <p class="form-hint">如使用 v1 接口需要</p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="minimax-model">模型</label>
-              <select id="minimax-model" class="form-input">
-                <option value="MiniMax-Text-01">MiniMax-Text-01（推荐）</option>
-                <option value="abab6.5s-chat">abab6.5s-chat</option>
-                <option value="abab5.5-chat">abab5.5-chat</option>
-              </select>
-            </div>
-          </div>
-
-          <div id="ai-common-fields" class="ai-fields hidden">
-            <div class="form-actions">
-              <button id="btn-test-ai" class="opt-btn secondary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-                测试连接
-              </button>
-              <button id="btn-save-ai" class="opt-btn primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                  <polyline points="17 21 17 13 7 13 7 21" />
-                  <polyline points="7 3 7 8 15 8" />
-                </svg>
-                保存配置
-              </button>
-            </div>
-            <div id="ai-test-result" class="opt-result hidden"></div>
+          <div id="sidebar-bookmark-tree" class="sidebar-bookmark-tree">
+            <div class="sidebar-tree-empty">正在读取本地书签结构...</div>
           </div>
         </section>
       </div>
 
-      <div class="opt-right">
-        <section class="opt-section" style="height: 100%; display: flex; flex-direction: column;">
-          <h2 class="section-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-            </svg>
-            AI 操作中心
-          </h2>
-          <div id="ai-main-view" class="ai-main-view">
-            <div class="ai-main-card">
-              <p class="ai-main-title">开始 AI 自动分类</p>
-              <p class="ai-main-desc">进入子界面后执行分析，你可以随时返回主界面。</p>
-              <button id="btn-enter-ai-analysis" class="opt-btn primary" style="width: 100%; justify-content: center;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                </svg>
-                进入 AI 分析子界面
-              </button>
+      <div class="sidebar-note">
+        <p class="sidebar-note-label">治理说明</p>
+        <strong>把同步、分析和治理动作压缩到同一套资产控制台。</strong>
+        <p>同步目标详情、风险判断和治理入口全部下沉到主控制台，左侧只保留高频导航和本地结构视图。</p>
+      </div>
+    </aside>
+
+    <main class="console-main">
+      <header class="console-page-header">
+        <div class="page-title-area">
+          <p class="page-eyebrow">ASSET CONSOLE</p>
+          <div class="page-title-row">
+            <h1>智能书签治理台</h1>
+            <span class="status-badge info">BOOKMARK GOVERNANCE</span>
+          </div>
+          <p class="page-desc">围绕同步、分析、体检与清理四个动作，重组书签资产的治理界面与状态反馈。</p>
+        </div>
+
+        <div class="page-header-actions">
+          <button id="btn-theme-toggle" class="header-tool header-tool-button" title="切换主题" type="button">
+            <span class="header-tool-label">主题外观</span>
+            <strong><span class="theme-icon">◐</span><span>界面模式</span></strong>
+          </button>
+          <div class="header-tool">
+            <span class="header-tool-label">同步连接</span>
+            <strong id="header-connection-status">未配置</strong>
+          </div>
+          <div class="header-tool">
+            <span class="header-tool-label">最近同步</span>
+            <strong id="header-last-sync">-</strong>
+          </div>
+          <div class="header-tool">
+            <span class="header-tool-label">待处理变更</span>
+            <strong id="header-pending-count">0 项</strong>
+          </div>
+          <a class="header-tool header-tool-link" href="/Users/jianbincui/Documents/bookmark/README.md" target="_blank" rel="noopener">
+            <span class="header-tool-label">帮助</span>
+            <strong>查看说明</strong>
+          </a>
+        </div>
+      </header>
+
+      <section class="governance-overview" aria-label="状态概览">
+        <article class="governance-overview-card">
+          <div class="governance-overview-head">
+            <div>
+              <p class="section-kicker">Governance Center</p>
+              <h2>书签治理中心概览</h2>
+              <p class="section-summary">把书签规模、待治理风险、连接状态和最近一次分析集中到同一块总览面板里。</p>
+            </div>
+            <div class="overview-connection-strip">
+              <div id="overview-sync-pill" class="connection-pill">
+                <span class="connection-pill-dot" aria-hidden="true"></span>
+                <div>
+                  <span class="connection-pill-label">同步目标</span>
+                  <strong id="overview-platform">未配置</strong>
+                </div>
+              </div>
+              <div id="overview-ai-pill" class="connection-pill">
+                <span class="connection-pill-dot" aria-hidden="true"></span>
+                <div>
+                  <span class="connection-pill-label">AI 引擎</span>
+                  <strong id="overview-ai-provider">未配置</strong>
+                </div>
+              </div>
+              <div class="connection-pill">
+                <span class="connection-pill-dot neutral" aria-hidden="true"></span>
+                <div>
+                  <span class="connection-pill-label">最近同步</span>
+                  <strong id="overview-last-sync">-</strong>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- 🚀 AI 子界面 🚀 -->
-          <div id="ai-sub-view" class="ai-sub-view hidden">
-            <div class="ai-sub-header">
-              <button id="btn-back-main" class="opt-btn secondary ai-back-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
-                返回主界面
-              </button>
+          <div class="governance-overview-body">
+            <div class="overview-hero-stats">
+              <article class="hero-stat-card">
+                <span class="overview-label">总书签数</span>
+                <strong id="overview-bookmark-count">-</strong>
+                <p id="overview-bookmark-detail" class="overview-detail">正在统计本地书签结构。</p>
+              </article>
+              <article class="hero-stat-card hero-stat-card-alert">
+                <span class="overview-label">待治理问题</span>
+                <strong id="overview-pending-issues">0</strong>
+                <p id="overview-pending-detail" class="overview-detail">汇总 AI 建议、失效链接和重复清理待处理项。</p>
+              </article>
             </div>
 
-            <div class="ai-actions-panel">
-              <div class="ai-intro">
-                <p><strong>智能分类助手</strong>：系统将读取您当前的浏览器书签列表，经过 AI 会话分析并建议分类。操作进度会百分比展示。</p>
-              </div>
-              <button id="btn-ai-classify" class="opt-btn primary" style="width: 100%; justify-content: center;"
-                disabled>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                </svg>
-                开始执行 AI 分析
-              </button>
-
-              <!-- 动态进度条 -->
-              <div id="ai-progress-box" class="hidden">
-                <div class="progress-container">
-                  <div id="ai-progress-bar" class="progress-bar"></div>
+            <div class="overview-hero-chart">
+              <div class="donut-shell">
+                <div id="governance-donut" class="governance-donut" aria-hidden="true"></div>
+                <div class="donut-center">
+                  <span>治理视图</span>
+                  <strong id="overview-distribution-title">等待扫描</strong>
                 </div>
-                <p class="form-hint" id="ai-progress-text" style="text-align: right; margin-top: 4px;">正在分析书签：0%</p>
+              </div>
+              <div class="donut-legend">
+                <div class="legend-row">
+                  <span class="legend-label"><i class="legend-dot healthy"></i>健康</span>
+                  <strong id="overview-healthy-ratio">0%</strong>
+                </div>
+                <div class="legend-row">
+                  <span class="legend-label"><i class="legend-dot unhealthy"></i>异常</span>
+                  <strong id="overview-unhealthy-ratio">0%</strong>
+                </div>
+                <div class="legend-row">
+                  <span class="legend-label"><i class="legend-dot duplicate"></i>重复</span>
+                  <strong id="overview-duplicate-ratio">0%</strong>
+                </div>
+                <div class="legend-row">
+                  <span class="legend-label"><i class="legend-dot unknown"></i>未扫描</span>
+                  <strong id="overview-unknown-ratio">100%</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="overview-side-cards">
+              <article class="overview-side-card">
+                <span class="overview-label">同步连接摘要</span>
+                <strong id="header-connection-status-mirror">未配置</strong>
+                <p id="overview-platform-detail" class="overview-detail">请选择 GitHub 或 GitLab 作为同步目标。</p>
+                <p id="overview-remote-detail" class="overview-side-meta">远端快照信息会在同步或历史加载后更新。</p>
+              </article>
+              <article class="overview-side-card">
+                <span class="overview-label">分析与治理状态</span>
+                <strong id="overview-last-analysis">-</strong>
+                <p id="overview-analysis-detail" class="overview-detail">AI 分析、体检和重复扫描记录会显示在这里。</p>
+                <p id="overview-ai-detail" class="overview-side-meta">保存后即可启动 AI 分类和规则语义解析。</p>
+              </article>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <div class="workspace-stack">
+        <section id="sync-config-section" class="console-section" data-section>
+          <button class="section-head section-toggle" type="button" aria-expanded="true">
+            <div>
+              <p class="section-kicker">Connection Center</p>
+              <h2>同步配置</h2>
+              <p class="section-summary" id="sync-section-summary">同步配置 - 未配置平台</p>
+            </div>
+            <span class="section-chevron">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </button>
+
+          <div class="section-body">
+            <div class="panel-grid sync-grid">
+              <article class="console-card">
+                <div class="card-head">
+                  <div>
+                    <h3>连接中心</h3>
+                    <p>先选择同步平台，再填写令牌、仓库或项目信息。表单会按平台自动切换。</p>
+                  </div>
+                  <span id="sync-connection-badge" class="status-badge muted">未配置</span>
+                </div>
+
+                <div class="segmented-grid segmented-grid-compact">
+                  <label class="segment-card">
+                    <input type="radio" name="platform" value="gitlab">
+                    <span class="segment-title">GitLab</span>
+                    <span class="segment-meta">官方与自建实例</span>
+                  </label>
+                  <label class="segment-card">
+                    <input type="radio" name="platform" value="github">
+                    <span class="segment-title">GitHub</span>
+                    <span class="segment-meta">标准仓库工作流</span>
+                  </label>
+                </div>
+
+                <div id="sync-platform-status" class="status-panel">
+                  <div class="status-panel-top">
+                    <strong id="sync-platform-title">未选择同步平台</strong>
+                    <span id="sync-platform-status-badge" class="status-badge muted">等待配置</span>
+                  </div>
+                  <p id="sync-platform-status-text">请选择 GitHub 或 GitLab，然后填写 Token、Owner / Repo 或项目标识。</p>
+                </div>
+
+                <div id="gitlab-fields" class="platform-fields hidden">
+                  <div class="field-grid two-columns">
+                    <label class="field-item">
+                      <span class="field-label">GitLab 地址</span>
+                      <input type="url" id="gitlab-url" class="form-input" placeholder="https://gitlab.com" value="https://gitlab.com">
+                      <span class="field-hint">支持自建实例，格式需包含完整协议头。</span>
+                    </label>
+                    <label class="field-item">
+                      <span class="field-label">项目 ID 或路径</span>
+                      <input type="text" id="gitlab-project" class="form-input" placeholder="12345 或 username/bookmarks">
+                      <span class="field-hint">支持数字 ID 或 `owner/repo` 路径。</span>
+                    </label>
+                  </div>
+
+                  <label class="field-item">
+                    <span class="field-label">Personal Access Token</span>
+                    <div class="secure-input">
+                      <input type="password" id="gitlab-token" class="form-input" placeholder="glpat-xxxxxxxxxxxx">
+                      <button type="button" class="inline-ghost-btn" data-toggle-visibility="gitlab-token">显示</button>
+                    </div>
+                    <span class="field-hint">需要 `api` 权限，仅保存在本地浏览器存储。</span>
+                  </label>
+                </div>
+
+                <div id="github-fields" class="platform-fields hidden">
+                  <div class="field-grid two-columns">
+                    <label class="field-item">
+                      <span class="field-label">仓库所有者</span>
+                      <input type="text" id="github-owner" class="form-input" placeholder="your-username">
+                      <span class="field-hint">支持个人账号或组织名。</span>
+                    </label>
+                    <label class="field-item">
+                      <span class="field-label">仓库名</span>
+                      <input type="text" id="github-repo" class="form-input" placeholder="bookmarks">
+                      <span class="field-hint">建议使用独立私有仓库存储书签快照。</span>
+                    </label>
+                  </div>
+
+                  <label class="field-item">
+                    <span class="field-label">Personal Access Token</span>
+                    <div class="secure-input">
+                      <input type="password" id="github-token" class="form-input" placeholder="ghp_xxxxxxxxxxxx">
+                      <button type="button" class="inline-ghost-btn" data-toggle-visibility="github-token">显示</button>
+                    </div>
+                    <span class="field-hint">需要 `repo` 权限，仅保存在本地浏览器存储。</span>
+                  </label>
+                </div>
+
+                <div id="common-fields" class="platform-fields hidden">
+                  <div class="field-grid two-columns">
+                    <label class="field-item">
+                      <span class="field-label">分支</span>
+                      <input type="text" id="sync-branch" class="form-input" value="main" placeholder="main">
+                      <span class="field-hint">默认使用 `main`，可改为你的工作分支。</span>
+                    </label>
+                    <label class="field-item">
+                      <span class="field-label">文件路径</span>
+                      <input type="text" id="sync-filepath" class="form-input" value="bookmarks.json" placeholder="bookmarks.json">
+                      <span class="field-hint">远端快照会写入这个文件路径。</span>
+                    </label>
+                  </div>
+
+                  <div class="inline-actions">
+                    <button id="btn-test-sync" class="btn btn-primary" type="button">测试连接</button>
+                    <button id="btn-save-sync" class="btn btn-primary" type="button">保存配置</button>
+                  </div>
+                  <div id="sync-test-result" class="result-box hidden"></div>
+                </div>
+              </article>
+
+              <article class="console-card summary-card">
+                <div class="card-head">
+                  <div>
+                    <h3>连接摘要</h3>
+                    <p>将仓库、分支、路径与最近验证结果压缩为键值结构，减少左侧冗余说明。</p>
+                  </div>
+                  <span id="sync-summary-badge" class="status-badge muted">未验证</span>
+                </div>
+
+                <div class="summary-status-block">
+                  <strong id="sync-summary-platform">未配置平台</strong>
+                  <p id="sync-summary-connection-text">完成平台选择、填写连接字段并测试成功后，这里会显示可追踪的连接状态。</p>
+                </div>
+
+                <dl class="meta-list meta-list-stack">
+                  <div>
+                    <dt>连接平台</dt>
+                    <dd id="sync-summary-platform-name">-</dd>
+                  </div>
+                  <div>
+                    <dt>仓库 / 项目</dt>
+                    <dd id="sync-summary-target">-</dd>
+                  </div>
+                  <div>
+                    <dt>分支</dt>
+                    <dd id="sync-summary-branch">-</dd>
+                  </div>
+                  <div>
+                    <dt>路径</dt>
+                    <dd id="sync-summary-path">-</dd>
+                  </div>
+                  <div>
+                    <dt>最近验证</dt>
+                    <dd id="sync-summary-tested-at">-</dd>
+                  </div>
+                  <div>
+                    <dt>最近同步</dt>
+                    <dd id="sync-summary-last-sync">-</dd>
+                  </div>
+                </dl>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="version-control-section" class="console-section" data-section>
+          <button class="section-head section-toggle" type="button" aria-expanded="true">
+            <div>
+              <p class="section-kicker">Recovery Console</p>
+              <h2>版本控制</h2>
+              <p class="section-summary" id="version-section-summary">版本控制 - 等待加载远端历史</p>
+            </div>
+            <span class="section-chevron">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </button>
+
+          <div class="section-body">
+            <div class="sync-ops-shell">
+              <div class="metrics-row">
+                <div class="metric-tile">
+                  <span>本地书签数量</span>
+                  <strong id="sync-metric-local-count">-</strong>
+                </div>
+                <div class="metric-tile">
+                  <span>远端书签数量</span>
+                  <strong id="sync-metric-remote-count">-</strong>
+                </div>
+                <div class="metric-tile">
+                  <span>最近同步时间</span>
+                  <strong id="sync-metric-last-sync">-</strong>
+                </div>
+                <div class="metric-tile">
+                  <span>远端版本时间</span>
+                  <strong id="sync-metric-remote-version">-</strong>
+                </div>
               </div>
 
-              <!-- AI 智能分类建议面板 -->
-              <div id="ai-suggestions" class="hidden">
-                <div class="ai-header-controls">
-                  <h3 style="font-size: 14px; font-weight: 700;">AI 分类建议</h3>
-                  <div class="ai-control-btns">
-                    <button id="btn-cancel-ai"
-                      style="color: var(--accent-red); border-color: rgba(240, 90, 90, 0.4);">放弃返回</button>
+              <div class="panel-grid">
+                <article class="action-card">
+                  <div class="card-head">
+                    <div>
+                      <h3>上传覆盖远端</h3>
+                      <p>将当前本地浏览器书签完整写入远端 `bookmarks.json`，用于生成新的远端快照。</p>
+                    </div>
+                    <span class="status-badge info">普通风险</span>
+                  </div>
+                  <p class="action-risk">适合本地资产已确认最新、需要用本地结果刷新远端基线时执行。</p>
+                  <button id="btn-sync-upload-full" class="btn btn-primary" type="button">全量上传覆盖远端</button>
+                </article>
+
+                <article class="action-card action-card-danger">
+                  <div class="card-head">
+                    <div>
+                      <h3>下载覆盖本地</h3>
+                      <p>将远端 `bookmarks.json` 完整回写到本地书签，执行强制恢复。</p>
+                    </div>
+                    <span class="status-badge warning">高风险操作</span>
+                  </div>
+                  <p class="action-risk">本地中远端不存在的书签会被移除。建议只在需要回滚本地状态时使用。</p>
+                  <button id="btn-sync-download-full" class="btn btn-danger" type="button">全量下载覆盖本地</button>
+                </article>
+              </div>
+
+              <article class="console-card">
+                <div class="card-head">
+                  <div>
+                    <h3>历史时间线</h3>
+                    <p>保留最近远端版本，突出时间、提交信息与恢复入口，避免列表过长过杂。</p>
+                  </div>
+                  <button id="btn-load-sync-versions" class="btn btn-primary" type="button">刷新历史</button>
+                </div>
+
+                <div id="sync-versions-box" class="timeline-shell hidden">
+                  <div class="timeline-header">
+                    <strong>远端版本历史</strong>
+                    <span id="sync-versions-count" class="timeline-count">0 条</span>
+                  </div>
+                  <div id="sync-versions-list" class="timeline-list"></div>
+                </div>
+
+                <div id="sync-ops-result" class="result-box hidden"></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="ai-classification-section" class="console-section" data-section>
+          <button class="section-head section-toggle" type="button" aria-expanded="true">
+            <div>
+              <p class="section-kicker">Intelligent Sorting</p>
+              <h2>AI 分类</h2>
+              <p class="section-summary" id="ai-section-summary">AI 分类配置 - 未配置提供商</p>
+            </div>
+            <span class="section-chevron">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </button>
+
+          <div class="section-body">
+            <div class="panel-grid ai-config-grid">
+              <article class="console-card">
+                <div class="card-head">
+                  <div>
+                    <h3>AI 配置</h3>
+                    <p>选择可用提供商并填写参数。AI 仅使用书签文本上下文处理，配置只保存在本地。</p>
                   </div>
                 </div>
 
-                <div class="ai-rule-panel">
-                  <label for="ai-rule-input" class="form-label">自然语言调整规则</label>
-                  <textarea id="ai-rule-input" class="form-input ai-rule-input"
-                    placeholder="例如：把吉他谱收藏夹和音乐收藏夹合并为吉他谱收藏夹"></textarea>
-                  <div class="ai-rule-actions">
-                    <button id="btn-apply-ai-rule" class="opt-btn secondary">应用规则到建议</button>
+                <div class="segmented-grid segmented-grid-compact">
+                  <label class="segment-card">
+                    <input type="radio" name="ai-provider" value="deepseek">
+                    <span class="segment-title">DeepSeek</span>
+                    <span class="segment-meta">分类与规则解析一体化</span>
+                  </label>
+                  <label class="segment-card">
+                    <input type="radio" name="ai-provider" value="minimax">
+                    <span class="segment-title">MiniMax</span>
+                    <span class="segment-meta">支持 Group ID 与模型切换</span>
+                  </label>
+                </div>
+
+                <div id="deepseek-fields" class="ai-fields hidden">
+                  <div class="field-grid two-columns">
+                    <label class="field-item field-item-span">
+                      <span class="field-label">API Key</span>
+                      <div class="secure-input secure-input-emphasis">
+                        <input type="password" id="deepseek-key" class="form-input" placeholder="sk-xxxxxxxxxxxx">
+                        <button type="button" class="inline-ghost-btn" data-toggle-visibility="deepseek-key">显示</button>
+                      </div>
+                      <span class="field-hint">仅保存在本地，可用于分类建议与规则语义解析。</span>
+                    </label>
+                    <label class="field-item">
+                      <span class="field-label">模型</span>
+                      <select id="deepseek-model" class="form-input">
+                        <option value="deepseek-chat">deepseek-chat</option>
+                        <option value="deepseek-reasoner">deepseek-reasoner</option>
+                      </select>
+                      <span class="field-hint">建议优先使用通用对话模型。</span>
+                    </label>
                   </div>
                 </div>
 
-                <!-- 分类标签导航 -->
+                <div id="minimax-fields" class="ai-fields hidden">
+                  <div class="field-grid two-columns">
+                    <label class="field-item field-item-span">
+                      <span class="field-label">API Key</span>
+                      <div class="secure-input secure-input-emphasis">
+                        <input type="password" id="minimax-key" class="form-input" placeholder="eyJhbGciOi...">
+                        <button type="button" class="inline-ghost-btn" data-toggle-visibility="minimax-key">显示</button>
+                      </div>
+                      <span class="field-hint">仅保存在本地，可用于分类建议与规则语义解析。</span>
+                    </label>
+                    <label class="field-item">
+                      <span class="field-label">Group ID</span>
+                      <input type="text" id="minimax-group" class="form-input" placeholder="可选">
+                      <span class="field-hint">兼容部分旧版账号或调用方式。</span>
+                    </label>
+                    <label class="field-item">
+                      <span class="field-label">模型</span>
+                      <select id="minimax-model" class="form-input">
+                        <option value="MiniMax-M2.1">MiniMax-M2.1</option>
+                        <option value="MiniMax-M2.1-highspeed">MiniMax-M2.1-highspeed</option>
+                        <option value="MiniMax-M2.5">MiniMax-M2.5</option>
+                        <option value="MiniMax-M2">MiniMax-M2</option>
+                      </select>
+                      <span class="field-hint">可根据速度与稳定性选择。</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div id="ai-common-fields" class="ai-fields hidden">
+                  <div class="inline-actions">
+                    <button id="btn-test-ai" class="btn btn-primary" type="button">测试连接</button>
+                    <button id="btn-save-ai" class="btn btn-primary" type="button">保存配置</button>
+                  </div>
+                  <div id="ai-test-result" class="result-box hidden"></div>
+                </div>
+              </article>
+
+              <article class="console-card">
+                <div class="card-head">
+                  <div>
+                    <h3>AI 状态面板</h3>
+                    <p>在开始分析前确认当前提供商、测试结果与最近分析时间。</p>
+                  </div>
+                  <span id="ai-ready-badge" class="status-badge muted">未就绪</span>
+                </div>
+
+                <div class="status-panel">
+                  <div class="status-panel-top">
+                    <strong id="ai-status-title">尚未配置 AI 提供商</strong>
+                    <span id="ai-status-source" class="status-badge muted">等待配置</span>
+                  </div>
+                  <p id="ai-status-text">完成配置并测试成功后，这里会提示 AI 服务已可用于建议分类与规则语义解析。</p>
+                  <dl class="meta-list meta-list-stack">
+                    <div>
+                      <dt>当前提供商</dt>
+                      <dd id="ai-status-provider">-</dd>
+                    </div>
+                    <div>
+                      <dt>最后测试时间</dt>
+                      <dd id="ai-status-tested-at">-</dd>
+                    </div>
+                    <div>
+                      <dt>最近分析时间</dt>
+                      <dd id="ai-status-analyzed-at">-</dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <article class="task-entry-card">
+                  <div class="card-head">
+                    <div>
+                      <h3>AI 分析入口</h3>
+                      <p>扫描书签文本并生成分类建议，不会立即修改数据。</p>
+                    </div>
+                    <span class="status-badge info">任务入口</span>
+                  </div>
+
+                  <div class="metrics-row compact">
+                    <div class="metric-tile">
+                      <span>待分析书签</span>
+                      <strong id="ai-metric-pending">-</strong>
+                    </div>
+                    <div class="metric-tile">
+                      <span>当前提供商</span>
+                      <strong id="ai-metric-provider">-</strong>
+                    </div>
+                    <div class="metric-tile">
+                      <span>上次分析时间</span>
+                      <strong id="ai-metric-last-analysis">-</strong>
+                    </div>
+                  </div>
+
+                  <button id="btn-ai-classify" class="btn btn-primary btn-wide" type="button" disabled>开始分析</button>
+
+                  <div id="ai-progress-box" class="progress-shell hidden">
+                    <div class="progress-stage" id="ai-progress-stage">准备开始</div>
+                    <div class="progress-track">
+                      <div id="ai-progress-bar" class="progress-fill"></div>
+                    </div>
+                    <p id="ai-progress-text" class="progress-text">等待任务开始</p>
+                  </div>
+                </article>
+              </article>
+            </div>
+
+            <div id="ai-suggestions" class="panel-grid panel-grid-wide hidden">
+              <article class="console-card">
+                <div class="card-head card-head-split">
+                  <div>
+                    <h3>建议工作台</h3>
+                    <p>以“原分类 → 建议分类”的对照方式审阅结果，并支持搜索、筛选和批量勾选。</p>
+                  </div>
+                  <div class="panel-actions">
+                    <span id="ai-action-summary" class="toolbar-hint">当前没有待应用建议</span>
+                    <button id="btn-clear-ai-actions" class="btn btn-secondary" type="button">清空勾选</button>
+                    <button id="btn-apply-ai-actions" class="btn btn-primary" type="button">应用 AI 变更</button>
+                    <button id="btn-cancel-ai" class="btn btn-secondary" type="button">清空本次分析</button>
+                  </div>
+                </div>
+
+                <div class="toolbar-grid">
+                  <button id="btn-select-visible" class="btn btn-secondary" type="button">全选当前结果</button>
+                  <button id="btn-clear-visible" class="btn btn-secondary" type="button">全不选</button>
+                  <label class="toolbar-check">
+                    <input type="checkbox" id="filter-checked-only">
+                    <span>仅看已勾选</span>
+                  </label>
+                  <select id="suggestion-category-filter" class="form-input toolbar-input">
+                    <option value="all">按分类筛选</option>
+                  </select>
+                  <select id="suggestion-group-mode" class="form-input toolbar-input">
+                    <option value="suggested">按建议分类分组</option>
+                    <option value="current">按原分类分组</option>
+                  </select>
+                  <input type="search" id="suggestion-search" class="form-input toolbar-input toolbar-search" placeholder="搜索建议标题、URL 或分类">
+                </div>
+
+                <div id="suggestions-empty" class="empty-state hidden">
+                  <strong>当前筛选下没有建议</strong>
+                  <p>可以调整搜索词、分类筛选或取消“仅看已勾选”。</p>
+                </div>
+
                 <div id="category-tabs" class="category-tabs"></div>
-
-                <!-- 当前分类的操作栏 -->
                 <div id="category-action-bar" class="category-action-bar hidden">
-                  <span id="category-action-hint" class="form-hint" style="margin: 0;"></span>
-                  <div class="ai-control-btns">
-                    <button id="btn-accept-cat" class="opt-btn primary"
-                      style="padding: 6px 14px; font-size: 12.5px;">勾选此类</button>
-                    <button id="btn-reject-cat" class="opt-btn secondary"
-                      style="padding: 6px 14px; font-size: 12.5px;">取消勾选此类</button>
-                    <button id="btn-delete-selected" class="opt-btn danger"
-                      style="padding: 6px 14px; font-size: 12.5px;">标记此类为删除</button>
+                  <span id="category-action-hint" class="toolbar-hint"></span>
+                  <div class="inline-actions compact-actions">
+                    <button id="btn-accept-cat" class="btn btn-primary" type="button">勾选当前组</button>
+                    <button id="btn-reject-cat" class="btn btn-secondary" type="button">取消勾选</button>
+                    <button id="btn-delete-selected" class="btn btn-danger" type="button">标记当前组删除</button>
                   </div>
                 </div>
 
-                <!-- 当前分类的建议列表 -->
-                <div id="suggestions-list" class="ai-suggestions-list"></div>
-                <button id="btn-apply-selected" class="opt-btn primary"
-                  style="width: 100%; margin-top: 16px; justify-content: center;">
-                  应用勾选变更
-                </button>
-              </div>
+                <div id="suggestions-list" class="suggestions-list"></div>
+              </article>
+
+              <article class="console-card">
+                <div class="card-head">
+                  <div>
+                    <h3>智能规则编辑器</h3>
+                    <p>支持更长的自然语言规则，并在应用前展示解析结果预览，降低黑盒感。</p>
+                  </div>
+                </div>
+
+                <label class="field-item">
+                  <span class="field-label">自然语言规则</span>
+                  <textarea id="ai-rule-input" class="form-input rule-editor" placeholder="把 A 和 B 合并为 C，再把 D 并入 C"></textarea>
+                  <span class="field-hint">支持合并、重命名、移动、排除条件等表达。优先使用本地规则解析，必要时回退到 AI 语义解析。</span>
+                </label>
+
+                <div class="example-chips">
+                  <button type="button" class="example-chip" data-rule-example="把 A 和 B 合并为 C">把 A 和 B 合并为 C</button>
+                  <button type="button" class="example-chip" data-rule-example="把 音乐 和 吉他谱 都归为 吉他谱">把 音乐 和 吉他谱 都归为 吉他谱</button>
+                  <button type="button" class="example-chip" data-rule-example="除工作外都并入学习">除工作外都并入学习</button>
+                </div>
+
+                <div id="rule-preview" class="preview-panel">
+                  <strong id="rule-preview-title">等待输入规则</strong>
+                  <p id="rule-preview-text">输入后会展示解析出的动作数量、命中分类和解析来源。</p>
+                </div>
+
+                <div class="inline-actions">
+                  <button id="btn-apply-ai-rule" class="btn btn-secondary" type="button">应用规则到建议</button>
+                </div>
+              </article>
             </div>
           </div>
         </section>
 
-        <section class="opt-section version-ops-section">
-          <h2 class="section-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 3v5h5" />
-              <path d="M3.05 13a9 9 0 1 0 .5-5.5L8 8" />
-            </svg>
-            版本控制与覆盖恢复
-          </h2>
-          <div class="sync-control-panel sync-control-panel-standalone">
-            <p class="form-hint">上传会将远端文件全部替换为本地最新书签；下载会将本地书签全部替换为远端版本。</p>
-            <div class="form-actions sync-direct-actions">
-              <button id="btn-sync-upload-full" class="opt-btn primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="17 8 12 3 7 8" />
-                  <line x1="12" y1="3" x2="12" y2="15" />
-                </svg>
-                上传并全部替换远端
-              </button>
-              <button id="btn-sync-download-full" class="opt-btn secondary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 12 12 17 17 12" />
-                  <line x1="12" y1="17" x2="12" y2="5" />
-                </svg>
-                下载并全部替换本地
-              </button>
+        <section id="bookmark-health-section" class="console-section" data-section>
+          <button class="section-head section-toggle" type="button" aria-expanded="true">
+            <div>
+              <p class="section-kicker">Link Health Center</p>
+              <h2>书签体检</h2>
+              <p class="section-summary" id="health-section-summary">书签体检 - 尚未检测失效链接</p>
             </div>
-            <div class="form-actions sync-history-actions">
-              <button id="btn-load-sync-versions" class="opt-btn secondary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="1 4 1 10 7 10" />
-                  <path d="M3.51 15a9 9 0 1 0 .49-9" />
-                </svg>
-                查看历史记录
-              </button>
-            </div>
-            <div id="sync-versions-box" class="sync-versions-box hidden">
-              <div class="sync-versions-header">
-                <strong>远端历史记录</strong>
-                <span id="sync-versions-count" class="sync-versions-count"></span>
+            <span class="section-chevron">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </button>
+
+          <div class="section-body">
+            <div class="panel-grid panel-grid-wide">
+              <article class="console-card console-card-accent task-entry-card">
+                <div class="card-head">
+                  <div>
+                    <h3>链接健康检查入口</h3>
+                    <p>检查书签是否仍可访问，识别失效、超时、跳转异常或疑似不可用的网址。</p>
+                  </div>
+                  <span class="status-badge info">健康检查任务</span>
+                </div>
+                <div class="metrics-row compact">
+                  <div class="metric-tile">
+                    <span>待检测书签</span>
+                    <strong id="health-metric-total">-</strong>
+                  </div>
+                  <div class="metric-tile">
+                    <span>上次检测时间</span>
+                    <strong id="health-metric-last-run">-</strong>
+                  </div>
+                  <div class="metric-tile">
+                    <span>最近结果摘要</span>
+                    <strong id="health-metric-summary">未检测</strong>
+                  </div>
+                </div>
+                <button id="btn-run-health-check" class="btn btn-primary btn-wide" type="button">一键开始检测</button>
+
+                <div id="health-progress-box" class="progress-shell hidden">
+                  <div class="progress-stage" id="health-progress-stage">准备开始</div>
+                  <div class="progress-track">
+                    <div id="health-progress-bar" class="progress-fill"></div>
+                  </div>
+                  <p id="health-progress-text" class="progress-text">等待任务开始</p>
+                </div>
+              </article>
+
+              <div class="stats-grid four-up stat-grid-stack">
+                <article class="stat-card">
+                  <span>正常链接</span>
+                  <strong id="health-stat-ok">0</strong>
+                </article>
+                <article class="stat-card">
+                  <span>失效链接</span>
+                  <strong id="health-stat-failed">0</strong>
+                </article>
+                <article class="stat-card">
+                  <span>超时链接</span>
+                  <strong id="health-stat-timeout">0</strong>
+                </article>
+                <article class="stat-card">
+                  <span>重定向异常</span>
+                  <strong id="health-stat-redirect">0</strong>
+                </article>
               </div>
-              <div id="sync-versions-list" class="sync-versions-list"></div>
             </div>
-            <div id="sync-ops-result" class="opt-result hidden"></div>
+
+            <article class="console-card">
+              <div class="card-head card-head-split">
+                <div>
+                  <h3>问题清单</h3>
+                  <p>保留本次体检结果，支持逐条忽略、重新检测，或直接应用删除操作。</p>
+                </div>
+                <div class="panel-actions">
+                  <span id="health-action-summary" class="toolbar-hint">当前没有待删除项</span>
+                  <button id="btn-clear-health-actions" class="btn btn-secondary" type="button">清空待删除</button>
+                  <button id="btn-apply-health-actions" class="btn btn-primary" type="button">应用体检结果</button>
+                </div>
+              </div>
+
+              <div class="toolbar-grid toolbar-grid-short">
+                <select id="health-filter" class="form-input toolbar-input">
+                  <option value="all">查看全部结果</option>
+                  <option value="problem">仅看失效或异常</option>
+                  <option value="timeout">仅看超时</option>
+                  <option value="queued">仅看已加入待删除</option>
+                </select>
+                <select id="health-category-filter" class="form-input toolbar-input">
+                  <option value="all">按分类查看</option>
+                </select>
+              </div>
+
+              <div id="health-empty" class="empty-state empty-state-health">
+                <strong>还没有体检结果</strong>
+                <p>开始检测后，这里会出现正常、失效、超时和重定向异常的统计与列表。</p>
+              </div>
+              <div id="health-results-list" class="list-stack"></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="duplicate-cleanup-section" class="console-section" data-section>
+          <button class="section-head section-toggle" type="button" aria-expanded="true">
+            <div>
+              <p class="section-kicker">Duplicate Governance</p>
+              <h2>重复清理</h2>
+              <p class="section-summary" id="duplicate-section-summary">重复清理 - 尚未检测重复书签</p>
+            </div>
+            <span class="section-chevron">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </button>
+
+          <div class="section-body">
+            <div class="panel-grid panel-grid-wide">
+              <article class="console-card console-card-accent task-entry-card">
+                <div class="card-head">
+                  <div>
+                    <h3>重复治理任务入口</h3>
+                    <p>识别重复保存的网址，支持按规则批量保留和清理，并默认预选更合理的保留项。</p>
+                  </div>
+                  <span class="status-badge info">治理工作台</span>
+                </div>
+                <div class="metrics-row compact">
+                  <div class="metric-tile">
+                    <span>重复组数量</span>
+                    <strong id="duplicate-metric-groups">0</strong>
+                  </div>
+                  <div class="metric-tile">
+                    <span>涉及书签数量</span>
+                    <strong id="duplicate-metric-items">0</strong>
+                  </div>
+                  <div class="metric-tile">
+                    <span>上次检测时间</span>
+                    <strong id="duplicate-metric-last-run">-</strong>
+                  </div>
+                </div>
+                <button id="btn-run-duplicate-check" class="btn btn-primary btn-wide" type="button">一键开始检测</button>
+              </article>
+
+              <div class="stats-grid three-up stat-grid-stack">
+                <article class="stat-card">
+                  <span>待清理项目</span>
+                  <strong id="duplicate-stat-marked">0</strong>
+                </article>
+                <article class="stat-card">
+                  <span>推荐保留项</span>
+                  <strong id="duplicate-stat-kept">0</strong>
+                </article>
+                <article class="stat-card">
+                  <span>筛选后分组</span>
+                  <strong id="duplicate-stat-visible">0</strong>
+                </article>
+              </div>
+            </div>
+
+            <article class="console-card">
+              <div class="card-head card-head-split">
+                <div>
+                  <h3>重复组工作台</h3>
+                  <p>每组默认给出推荐保留项，你也可以切换策略或完全手动选择。</p>
+                </div>
+                <div class="panel-actions">
+                  <span id="duplicate-action-summary" class="toolbar-hint">当前没有待清理项</span>
+                  <button id="btn-clear-duplicate-actions" class="btn btn-secondary" type="button">清空待清理</button>
+                  <button id="btn-apply-duplicate-actions" class="btn btn-primary" type="button">应用重复清理</button>
+                </div>
+              </div>
+
+              <div class="toolbar-grid">
+                <button id="btn-apply-default-duplicate-strategy" class="btn btn-secondary" type="button">全部按默认策略处理</button>
+                <button id="btn-expand-duplicates" class="btn btn-secondary" type="button">定位到列表顶部</button>
+                <select id="duplicate-filter" class="form-input toolbar-input">
+                  <option value="all">查看全部重复组</option>
+                  <option value="pending">仅看未处理</option>
+                </select>
+                <select id="duplicate-category-filter" class="form-input toolbar-input">
+                  <option value="all">按分类聚合</option>
+                </select>
+              </div>
+
+              <div id="duplicate-empty" class="empty-state empty-state-duplicate">
+                <strong>还没有重复检测结果</strong>
+                <p>开始检测后，这里会按重复组展示保留与删除建议。</p>
+              </div>
+              <div id="duplicate-groups-list" class="duplicate-groups"></div>
+            </article>
           </div>
         </section>
       </div>
     </main>
 
+    <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">二次确认</p>
+            <h3 id="confirm-modal-title">确认执行</h3>
+          </div>
+          <button id="btn-close-modal" class="icon-btn" type="button" aria-label="关闭">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <p id="confirm-modal-text" class="modal-text">确认后将执行当前操作。</p>
+        <div class="modal-actions">
+          <button id="btn-cancel-modal" class="btn btn-secondary" type="button">取消</button>
+          <button id="btn-confirm-modal" class="btn btn-danger" type="button">确认执行</button>
+        </div>
+      </div>
+    </div>
 
-    <!-- Toast -->
     <div id="toast" class="toast hidden"></div>
   </div>
 

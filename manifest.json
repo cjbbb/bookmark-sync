@@ -12,6 +12,7 @@
   "host_permissions": [
     "https://gitlab.com/*",
     "https://api.github.com/*",
+    "https://api.minimaxi.com/*",
     "https://api.minimax.chat/*",
     "https://api.deepseek.com/*",
     "https://*/*"
