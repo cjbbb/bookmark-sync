@@ -1,0 +1,20 @@
+{
+  "name": "@bookmark-sync/extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@bookmark-sync/browser-adapters": "0.1.0",
+    "@bookmark-sync/core": "0.1.0",
+    "@bookmark-sync/storage-adapters": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.326",
+    "vite": "^6.3.2"
+  }
+}

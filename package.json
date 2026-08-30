@@ -1,0 +1,27 @@
+{
+  "name": "bookmark-sync",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AI bookmark curation, link health, and safe cross-browser sync workspace",
+  "workspaces": [
+    "packages/*",
+    "extension",
+    "server"
+  ],
+  "scripts": {
+    "build": "npm run build:core && npm run build:browser && npm run build:storage && npm run build:extension && npm run build:server",
+    "build:core": "npm run build --workspace @bookmark-sync/core",
+    "build:browser": "npm run build --workspace @bookmark-sync/browser-adapters",
+    "build:storage": "npm run build --workspace @bookmark-sync/storage-adapters",
+    "build:extension": "npm run build --workspace @bookmark-sync/extension",
+    "build:server": "npm run build --workspace @bookmark-sync/server",
+    "typecheck": "npm run build:core && npm run build:browser && npm run build:storage && npm run typecheck:packages",
+    "typecheck:packages": "npm run typecheck --workspace @bookmark-sync/core && npm run typecheck --workspace @bookmark-sync/browser-adapters && npm run typecheck --workspace @bookmark-sync/storage-adapters && npm run typecheck --workspace @bookmark-sync/extension && npm run typecheck --workspace @bookmark-sync/server",
+    "test": "npm run build:core && npm run build:browser && npm run build:storage && vitest run packages/core/src/core.test.ts packages/storage-adapters/src/storage.test.ts packages/storage-adapters/src/webdav.test.ts packages/browser-adapters/src/chromium.test.ts",
+    "server:dev": "npm run dev --workspace @bookmark-sync/server"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.3"
+  }
+}

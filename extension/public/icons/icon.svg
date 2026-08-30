@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Squircle Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="45%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+
+    <!-- Glass Overlay Gradient -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <!-- Bookmark Ribbon Gradient -->
+    <linearGradient id="bookmarkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F1F5F9"/>
+    </linearGradient>
+
+    <!-- Inner Ribbon Shadow/Depth -->
+    <linearGradient id="ribbonDepth" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadowFilter" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#0F172A" flood-opacity="0.32"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.2"/>
+    </filter>
+
+    <filter id="iconShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1E1B4B" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base -->
+  <rect x="32" y="32" width="448" height="448" rx="108" fill="url(#bgGrad)" filter="url(#shadowFilter)"/>
+  <rect x="32" y="32" width="448" height="448" rx="108" fill="url(#glassGrad)"/>
+  <rect x="33" y="33" width="446" height="446" rx="107" fill="none" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="2.5"/>
+
+  <!-- Subtle Glowing Ring -->
+  <circle cx="256" cy="256" r="168" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="32"/>
+
+  <!-- Bookmark Ribbon Background Card -->
+  <g filter="url(#iconShadow)">
+    <!-- Bookmark Body: Rect with bottom ribbon notch -->
+    <path d="M168 116 C168 102.7 178.7 92 192 92 L320 92 C333.3 92 344 102.7 344 116 L344 388 C344 397.6 333.2 403.2 325.2 397.7 L256 350 L186.8 397.7 C178.8 403.2 168 397.6 168 388 Z"
+          fill="url(#bookmarkGrad)"/>
+
+    <!-- Subtle Top Fold Accent on Bookmark -->
+    <path d="M192 92 L320 92 C333.3 92 344 102.7 344 116 L344 126 L168 126 L168 116 C168 102.7 178.7 92 192 92 Z"
+          fill="#FFFFFF" opacity="0.8"/>
+
+    <!-- Dynamic Sync Arrows Loop inside the Bookmark Ribbon -->
+    <!-- Top Arc Arrow (Left-to-Right Flow) -->
+    <path d="M208 226 A52 52 0 0 1 298 202" fill="none" stroke="url(#ribbonDepth)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M294 186 L310 204 L288 218 Z" fill="#6366F1"/>
+
+    <!-- Bottom Arc Arrow (Right-to-Left Flow) -->
+    <path d="M304 266 A52 52 0 0 1 214 290" fill="none" stroke="url(#ribbonDepth)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M218 306 L202 288 L224 274 Z" fill="#0EA5E9"/>
+
+    <!-- Center Connected Node / Sparkle -->
+    <circle cx="256" cy="246" r="10" fill="url(#ribbonDepth)"/>
+  </g>
+</svg>
